@@ -336,12 +336,13 @@ create table "tms_TaskBoardRelationship" (
   board text
 );
 create table "tms_TaskBoard" (
-  id text generated always as (pkey(source, uid)) stored primary key,
+  id text generated always as (pkey(organization, uid)) stored primary key,
   origin text,
   "refreshedAt" timestamptz not null default now(),
   uid text not null,
   name text,
-  source text
+  source text,
+  organization text
 );
 create table "tms_TaskDependency" (
   id text generated always as (pkey("dependentTask", "fulfillingTask")) stored primary key,
@@ -380,7 +381,7 @@ create table "tms_TaskTag" (
   task text
 );
 create table "tms_Task" (
-  id text generated always as (pkey(source, uid)) stored primary key,
+  id text generated always as (pkey(organization, uid)) stored primary key,
   origin text,
   "refreshedAt" timestamptz not null default now(),
   uid text not null,
@@ -400,16 +401,18 @@ create table "tms_Task" (
   parent text,
   creator text,
   epic text,
-  sprint text
+  sprint text,
+  organization text
 );
 create table "tms_User" (
-  id text generated always as (pkey(source, uid)) stored primary key,
+  id text generated always as (pkey(organization, uid)) stored primary key,
   origin text,
   "refreshedAt" timestamptz not null default now(),
   uid text not null,
   "emailAddress" text,
   name text,
-  source text
+  source text,
+  organization text
 );
 
 -- vcs models --
@@ -581,6 +584,8 @@ alter table "tms_Task" add foreign key (creator) references "tms_User"(id);
 alter table "tms_Task" add foreign key (epic) references "tms_Epic"(id);
 alter table "tms_Task" add foreign key (parent) references "tms_Task"(id);
 alter table "tms_Task" add foreign key (sprint) references "tms_Sprint"(id);
+alter table "tms_Task" add foreign key (organization) references "vcs_Organization"(id);
+alter table "tms_TaskBoard" add foreign key (organization) references "vcs_Organization"(id);
 alter table "tms_TaskAssignment" add foreign key (assignee) references "tms_User"(id);
 alter table "tms_TaskAssignment" add foreign key (task) references "tms_Task"(id);
 alter table "tms_TaskBoardProjectRelationship" add foreign key (board) references "tms_TaskBoard"(id);
@@ -597,6 +602,7 @@ alter table "tms_TaskReleaseRelationship" add foreign key (release) references "
 alter table "tms_TaskReleaseRelationship" add foreign key (task) references "tms_Task"(id);
 alter table "tms_TaskTag" add foreign key (label) references "tms_Label"(id);
 alter table "tms_TaskTag" add foreign key (task) references "tms_Task"(id);
+alter table "tms_User" add foreign key (organization) references "vcs_Organization"(id);
 alter table "vcs_Branch" add foreign key (repository) references "vcs_Repository"(id);
 alter table "vcs_BranchCommitAssociation" add foreign key (branch) references "vcs_Branch"(id);
 alter table "vcs_BranchCommitAssociation" add foreign key (commit) references "vcs_Commit"(id);

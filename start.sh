@@ -77,10 +77,13 @@ main() {
     export FAROS_START_SOURCE=$SOURCE
 
     # Ensure we're using the latest faros-init image
-    export FAROS_INIT_IMAGE=farosai.docker.scarf.sh/farosai/faros-ce-init:latest
-    docker compose pull faros-init
+    # export FAROS_INIT_IMAGE=farosai.docker.scarf.sh/farosai/faros-ce-init:latest
+    export FAROS_INIT_IMAGE=flowyzer/faros-ce-init:latest
+    docker build -t flowyzer/faros-ce-init:latest .
+    # docker compose pull faros-init
     # docker image ls appears to be sorted by creation date
     VERSION=$(docker image ls -q $FAROS_INIT_IMAGE | head -n 1)
+    printf " Faros init version $VERSION .\n"
     export FAROS_INIT_VERSION=$VERSION
 
     if [[ $(uname -m 2>/dev/null) == 'arm64' ]]; then
