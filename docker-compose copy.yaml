@@ -7,7 +7,7 @@ x-logging: &default-logging
   driver: json-file
 services:
   faros-init:
-    profiles: ["faros-init"]
+    # profiles: ["default", "faros-init"]
     image: ${FAROS_INIT_IMAGE?}
     # 3 retries on failure
     restart: on-failure:3
@@ -46,8 +46,6 @@ services:
       timeout: 2s
       start_period: 10s
       retries: 5
-    networks:
-        - airbyte_internal
   docker-proxy:
       image: alpine/socat
       command: -d -d -t 900 TCP-LISTEN:2375,fork,reuseaddr UNIX-CONNECT:/var/run/docker.sock
@@ -398,9 +396,9 @@ services:
       - webapp
       - server
       - airbyte-api-server
-  #Other services
+  # Other services
   hasura:
-    profiles: ["flowyzer-services"]
+    # profiles: ["default"]
     image: hasura/graphql-engine:${HASURA_VERSION?}
     container_name: hasura
     ports:
@@ -421,7 +419,7 @@ services:
       - airbyte_internal
       - airbyte_public
   metabase:
-    profiles: ["flowyzer-services"]
+    # profiles: ["default"]
     image: ${METABASE_IMAGE}:${METABASE_VERSION}
     container_name: metabase
     ports:
@@ -445,7 +443,7 @@ services:
       - airbyte_internal
       - airbyte_public
   n8n:
-    profiles: ["flowyzer-services"]
+    # profiles: ["default"]
     image: n8nio/n8n:${N8N_VERSION?}
     container_name: n8n
     ports:

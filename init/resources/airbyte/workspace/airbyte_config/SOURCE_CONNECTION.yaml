@@ -1,0 +1,115 @@
+---
+- name: "GitHub"
+  configuration:
+    repository: ""
+    start_date: "2022-01-01T00:00:00Z"
+    credentials:
+      option_title: "PAT Credentials"
+      personal_access_token: ""
+    page_size_for_large_streams: 10
+  tombstone: false
+- name: "GitLab"
+  configuration:
+    groups: ""
+    api_url: ""
+    projects: ""
+    start_date: "2022-01-01T00:00:00Z"
+    private_token: ""
+  tombstone: false
+- name: "Bitbucket"
+  configuration:
+    pagelen: 100
+    serverUrl: "https://api.bitbucket.org/2.0"
+    workspaces: []
+    cutoff_days: 90
+  tombstone: false
+- name: "Phabricator"
+  configuration:
+    limit: 100
+    token: ""
+    server_url: ""
+    cutoff_days: 90
+  tombstone: false
+- name: "Jira"
+  configuration:
+    email: ""
+    domain: "jira.atlassian.net"
+    projects: []
+    api_token: ""
+    start_date: "2022-01-01T00:00:00Z"
+    render_fields: true
+    expand_issue_changelog: true
+    enable_experimental_streams: true
+  tombstone: false
+- name: "Buildkite"
+  configuration:
+    token: ""
+    cutoff_days: 90
+    graphql_version: "v1"
+    rest_api_version: "v2"
+  tombstone: false
+- name: "CircleCI"
+  configuration:
+    url: "https://circleci.com/api/v2"
+    token: ""
+    project_names: []
+    cutoff_days: 90
+    reject_unauthorized: true
+  tombstone: false
+- name: "Harness"
+  configuration:
+    api_key: ""
+    api_url: "https://app.harness.io"
+    page_size: 100
+    account_id: ""
+    cutoff_days: 90
+    deployment_timeout: 24
+  tombstone: false
+- name: "Jenkins"
+  configuration:
+    user: ""
+    token: ""
+    pageSize: 10
+    server_url: ""
+    last100Builds: false
+  tombstone: false
+- name: "OpsGenie"
+  configuration:
+    api_key: ""
+    page_size: 10
+    cutoff_days: 90
+  tombstone: false
+- name: "Datadog"
+  configuration:
+    api_key: ""
+    page_size: 100
+    application_key: ""
+  tombstone: false
+- name: "PagerDuty"
+  configuration:
+    token: ""
+    page_size: 25
+    cutoff_days: 90
+    incident_log_entries_overview: true
+  tombstone: false
+- name: "SquadCast"
+  configuration:
+    token: ""
+    cutoff_days: 90
+    max_content_length: 20000
+  tombstone: false
+- name: "Statuspage"
+  configuration:
+    api_key: ""
+    page_id: ""
+    cutoff_days: 90
+  tombstone: false
+- name: "VictorOps"
+  configuration:
+    apiId: ""
+    apiKey: ""
+    pageLimit: 100
+    cutoff_days: 90
+    currentPhase: "triggered,acknowledged,resolved"
+    maxContentLength: 500000
+  tombstone: false

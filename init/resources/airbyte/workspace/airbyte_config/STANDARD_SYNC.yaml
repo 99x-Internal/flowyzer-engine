@@ -1,0 +1,1342 @@
+---
+- prefix: "github_source__github__"
+  name: "GitHub - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "assignees"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "branches"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "repository"
+        - - "name"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "repository"
+      - - "name"
+    - stream:
+        name: "collaborators"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "commits"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "created_at"
+        source_defined_primary_key:
+        - - "sha"
+      sync_mode: "incremental"
+      cursor_field:
+      - "created_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "sha"
+    - stream:
+        name: "issue_labels"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "issue_milestones"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "issues"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "organizations"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "pull_requests"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "releases"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "created_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "created_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "repositories"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "review_comments"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "reviews"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "pull_request_updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "submitted_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "tags"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "repository"
+        - - "name"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "repository"
+      - - "name"
+    - stream:
+        name: "users"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "workflow_runs"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "workflows"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "gitlab_source__gitlab__"
+  name: "GitLab - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "branches"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "name"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "name"
+    - stream:
+        name: "commits"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "created_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "created_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "group_labels"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "group_members"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "group_milestones"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "groups"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "issues"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "jobs"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "merge_requests"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "pipelines"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "project_labels"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "project_milestones"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "projects"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "releases"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "name"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "name"
+    - stream:
+        name: "tags"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "name"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "name"
+    - stream:
+        name: "users"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "bitbucket_source__bitbucket__"
+  name: "Bitbucket - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "branches"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "name"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "name"
+    - stream:
+        name: "commits"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "date"
+        source_defined_primary_key:
+        - - "hash"
+      sync_mode: "incremental"
+      cursor_field:
+      - "date"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "hash"
+    - stream:
+        name: "deployments"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "uuid"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "uuid"
+    - stream:
+        name: "issues"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updatedOn"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updatedOn"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "pipeline_steps"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "uuid"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "uuid"
+    - stream:
+        name: "pipelines"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "uuid"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "uuid"
+    - stream:
+        name: "pull_request_activities"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "pullRequestUpdatedOn"
+        source_defined_primary_key: []
+      sync_mode: "incremental"
+      cursor_field:
+      - "pullRequestUpdatedOn"
+      destination_sync_mode: "append_dedup"
+      primary_key: []
+    - stream:
+        name: "pull_requests"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updatedOn"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updatedOn"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "repositories"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key: []
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key: []
+    - stream:
+        name: "workspace_users"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key: []
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key: []
+    - stream:
+        name: "workspaces"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key: []
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key: []
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "phabricator_source__phabricator__"
+  name: "Phabricator - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "commits"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "fields"
+        - "committer"
+        - "epoch"
+        source_defined_primary_key: []
+      sync_mode: "incremental"
+      cursor_field:
+      - "fields"
+      - "committer"
+      - "epoch"
+      destination_sync_mode: "append_dedup"
+      primary_key: []
+    - stream:
+        name: "projects"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "fields"
+        - "dateModified"
+        source_defined_primary_key:
+        - - "phid"
+      sync_mode: "full_refresh"
+      cursor_field:
+      - "fields"
+      - "dateModified"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "phid"
+    - stream:
+        name: "repositories"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "fields"
+        - "dateModified"
+        source_defined_primary_key:
+        - - "phid"
+      sync_mode: "full_refresh"
+      cursor_field:
+      - "fields"
+      - "dateModified"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "phid"
+    - stream:
+        name: "revisions"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "fields"
+        - "dateModified"
+        source_defined_primary_key:
+        - - "phid"
+      sync_mode: "incremental"
+      cursor_field:
+      - "fields"
+      - "dateModified"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "phid"
+    - stream:
+        name: "users"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "fields"
+        - "dateModified"
+        source_defined_primary_key:
+        - - "phid"
+      sync_mode: "full_refresh"
+      cursor_field:
+      - "fields"
+      - "dateModified"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "phid"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "jira_source__jira__"
+  name: "Jira - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "board_issues"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "fields"
+        - "updated"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "fields"
+      - "updated"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "boards"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "epics"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "fields"
+        - "updated"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "fields"
+      - "updated"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "issue_fields"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "issues"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "fields"
+        - "updated"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "fields"
+      - "updated"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "project_versions"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "projects"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "pull_requests"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "sprint_issues"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "fields"
+        - "updated"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "fields"
+      - "updated"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "sprints"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "users"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key: []
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key: []
+    - stream:
+        name: "workflow_statuses"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "buildkite_source__buildkite__"
+  name: "Buildkite - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "builds"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "createdAt"
+        source_defined_primary_key:
+        - - "uuid"
+      sync_mode: "incremental"
+      cursor_field:
+      - "createdAt"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "uuid"
+    - stream:
+        name: "organizations"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "pipelines"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "circleci_source__circleci__"
+  name: "CircleCI - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "pipelines"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "projects"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "harness_source__harness__"
+  name: "Harness - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "executions"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "endedAt"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "endedAt"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "jenkins_source__jenkins__"
+  name: "Jenkins - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "builds"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "number"
+        source_defined_primary_key:
+        - - "fullDisplayName"
+      sync_mode: "incremental"
+      cursor_field:
+      - "number"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "fullDisplayName"
+    - stream:
+        name: "jobs"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "url"
+        source_defined_primary_key:
+        - - "fullName"
+      sync_mode: "incremental"
+      cursor_field:
+      - "url"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "fullName"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "datadog_source__datadog__"
+  name: "Datadog - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "incidents"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "modified"
+        source_defined_primary_key: []
+      sync_mode: "incremental"
+      cursor_field:
+      - "modified"
+      destination_sync_mode: "append_dedup"
+      primary_key: []
+    - stream:
+        name: "users"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "modifiedAt"
+        source_defined_primary_key: []
+      sync_mode: "full_refresh"
+      cursor_field:
+      - "modifiedAt"
+      destination_sync_mode: "overwrite"
+      primary_key: []
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "opsgenie_source__opsgenie__"
+  name: "OpsGenie - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "incidents"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "createdAt"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "createdAt"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "teams"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "users"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "pagerduty_source__pagerduty__"
+  name: "PagerDuty - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "incident_log_entries"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "created_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "created_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "incidents"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "created_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "created_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "priorities_resource"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "users"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "squadcast_source__squadcast__"
+  name: "SquadCast - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "events"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "alert_source_id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "alert_source_id"
+    - stream:
+        name: "incidents"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "created_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "created_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "services"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "users"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "statuspage_source__statuspage__"
+  name: "Statuspage - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "incident_updates"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "incidents"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "incremental"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "id"
+    - stream:
+        name: "users"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "updated_at"
+        source_defined_primary_key:
+        - - "id"
+      sync_mode: "full_refresh"
+      cursor_field:
+      - "updated_at"
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "id"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
+- prefix: "victorops_source__victorops__"
+  name: "VictorOps - Faros"
+  catalog:
+    streams:
+    - stream:
+        name: "incidents"
+        supported_sync_modes:
+        - "full_refresh"
+        - "incremental"
+        source_defined_cursor: true
+        default_cursor_field:
+        - "startTime"
+        source_defined_primary_key:
+        - - "incidentNumber"
+      sync_mode: "incremental"
+      cursor_field:
+      - "startTime"
+      destination_sync_mode: "append_dedup"
+      primary_key:
+      - - "incidentNumber"
+    - stream:
+        name: "teams"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "slug"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "slug"
+    - stream:
+        name: "users"
+        supported_sync_modes:
+        - "full_refresh"
+        default_cursor_field: []
+        source_defined_primary_key:
+        - - "username"
+      sync_mode: "full_refresh"
+      cursor_field: []
+      destination_sync_mode: "overwrite"
+      primary_key:
+      - - "username"
+  status: "active"
+  manual: true
+  resourceRequirements: {}
