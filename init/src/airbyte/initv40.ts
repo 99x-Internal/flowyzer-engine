@@ -7,7 +7,14 @@ import pino from 'pino';
 
 const logger = pino({
   name: 'airbytev40-init',
-  level: process.env.LOG_LEVEL || 'info',
+  customLevels: {
+    debug: 35,
+    info: 30,
+    warn: 40,
+    error: 50,
+    fatal: 60
+  },
+  level: 'info',
 });
 
 import {BASE_RESOURCES_DIR} from '../config';

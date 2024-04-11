@@ -11,7 +11,14 @@ import {AirbyteInitV40} from './initv40';
 
 const logger = pino({
   name: 'airbyte-init',
-  level: process.env.LOG_LEVEL || 'info',
+  customLevels: {
+    debug: 35,
+    info: 30,
+    warn: 40,
+    error: 50,
+    fatal: 60
+  },
+  level: 'info',
 });
 
 export const FAROS_DEST_REPO = 'farosai/airbyte-faros-destination';
@@ -190,6 +197,7 @@ async function main(): Promise<void> {
   const airbyte = new AirbyteInit(
     axios.create({
       baseURL: `${options.airbyteUrl}/api/v1`,
+      headers: { 'Content-Type': 'application/json' }
     })
   );
 

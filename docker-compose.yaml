@@ -7,7 +7,7 @@ x-logging: &default-logging
   driver: json-file
 services:
   faros-init:
-    profiles: ["faros-init"]
+    # profiles: ["faros-init"]
     image: ${FAROS_INIT_IMAGE?}
     # 3 retries on failure
     restart: on-failure:3
@@ -400,7 +400,7 @@ services:
       - airbyte-api-server
   #Other services
   hasura:
-    profiles: ["flowyzer-services"]
+    # profiles: ["flowyzer-services"]
     image: hasura/graphql-engine:${HASURA_VERSION?}
     container_name: hasura
     ports:
@@ -421,7 +421,7 @@ services:
       - airbyte_internal
       - airbyte_public
   metabase:
-    profiles: ["flowyzer-services"]
+    # profiles: ["flowyzer-services"]
     image: ${METABASE_IMAGE}:${METABASE_VERSION}
     container_name: metabase
     ports:
@@ -445,7 +445,7 @@ services:
       - airbyte_internal
       - airbyte_public
   n8n:
-    profiles: ["flowyzer-services"]
+    # profiles: ["flowyzer-services"]
     image: n8nio/n8n:${N8N_VERSION?}
     container_name: n8n
     ports:

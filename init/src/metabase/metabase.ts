@@ -404,7 +404,9 @@ export class Metabase {
       });
       return data;
     } catch (err) {
-      throw wrapApiError(err, 'unable to add card to dashboard: ' + id);
+      //NB: for Flowyzer, Throwing an error for card creation is not needed. 
+      const error = wrapApiError(err, 'unable to add card to dashboard: ' + id);
+      console.log(JSON.stringify(error, null, 2));
     }
   }
 

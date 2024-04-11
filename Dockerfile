@@ -17,5 +17,5 @@ RUN npm ci
 COPY canonical-schema ./canonical-schema
 COPY init/scripts ./scripts
 WORKDIR /home/flyway/faros/scripts
-ENTRYPOINT ["tail", "-f", "/dev/null"]
-# ENTRYPOINT [""]
+# ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["./entrypoint.sh"]
