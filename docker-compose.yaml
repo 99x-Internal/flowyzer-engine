@@ -191,6 +191,7 @@ services:
       - "9000"
     networks:
       - airbyte_internal
+      - airbyte_public
     depends_on:
       bootloader:
         condition: service_completed_successfully
