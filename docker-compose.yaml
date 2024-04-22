@@ -104,8 +104,11 @@ services:
       - POSTGRES_USER=${DATABASE_USER}
     volumes:
       - db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     networks:
       - airbyte_internal
+      - airbyte_public # Remove this before going live
   worker:
     image: airbyte/worker:${VERSION}
     logging: *default-logging
