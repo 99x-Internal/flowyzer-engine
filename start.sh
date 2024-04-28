@@ -23,14 +23,6 @@ email_prompt() {
 function parseFlags() {
     while (($#)); do
         case "$1" in
-        --run-cli)
-            run_cli=1
-            shift 1
-            ;;
-        --email)
-            email_override=$2
-            shift 2
-            ;;
         --source)
             source=$2
             shift 2
@@ -44,31 +36,20 @@ function parseFlags() {
 }
 
 main() {
+    # Check if .env fle exisits, if not rename env.dev to .env
+    if [ ! -f .env ]; then
+        cp env.dev .env
+    fi
+
+    # Check if docker compose is running
     RUNNING=$(docker compose ps -q --status=running | wc -l)
     if [ "$RUNNING" -gt 0 ]; then
-        printf "Faros CE is still running. \n"
+        printf "Flowyzer Engine is still running. \n"
         printf "You can stop it with the ./stop.sh command. \n"
         exit 1
     fi
 
     parseFlags "$@"
-    EMAIL_FILE=".faros-email"
-    if [[ -n "$email_override" ]]; then
-        EMAIL=$email_override
-        echo "$email_override" >$EMAIL_FILE
-    else
-        if [[ -f "$EMAIL_FILE" ]]; then
-            EMAIL=$(cat $EMAIL_FILE)
-        else
-            printf "Hello 👋 Welcome to Faros Community Edition! 🤗\n\n"
-            printf "Want to stay up to date with the latest community news? (we won't spam you)\n"
-            email_prompt
-            echo "$EMAIL" >$EMAIL_FILE
-        fi
-    fi
-
-    export FAROS_EMAIL=$EMAIL
-
     if [[ -n "$source" ]]; then
         SOURCE=$source
     else
@@ -83,16 +64,9 @@ main() {
     # docker compose pull faros-init
     # docker image ls appears to be sorted by creation date
     VERSION=$(docker image ls -q $FAROS_INIT_IMAGE | head -n 1)
-    printf " Faros init version $VERSION .\n"
+    printf " Flowyzer init version $VERSION .\n"
     export FAROS_INIT_VERSION=$VERSION
-
-    if [[ $(uname -m 2>/dev/null) == 'arm64' ]]; then
-        # Use Metabase images built for Apple M1
-        # METABASE_IMAGE="farosai.docker.scarf.sh/farosai/metabase-m1" \
-        docker compose up --build --remove-orphans --detach && docker compose logs --follow faros-init
-    else
-        docker compose up --build --remove-orphans --detach && docker compose logs --follow faros-init
-    fi
+    docker compose up --build --remove-orphans --detach && docker compose logs --follow faros-init
 }
 
 main "$@"
