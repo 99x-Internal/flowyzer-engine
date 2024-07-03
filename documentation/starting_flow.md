@@ -7,7 +7,6 @@
   - Setup directory structure and copy project files to the directory.
   - Copies the canonical-schema directory and scripts from the init directory into the image.
   - will set the ENTRYPOINT ["./entrypoint.sh"]
-  - This will trigger the entrypoint.
 
 ### Docker-compose
 
@@ -52,3 +51,22 @@ This script is designed to manage the creation of PostgreSQL databases and apply
 - Setting up metabase configuration
 - If the user setup is not completed, it sets up Metabase with the provided details and database configuration.
 - Importing dashboards it confirms that the Faros database is attached to Metabase and runs `/lib/metabase/init.js` script to import dashboards.
+
+```mermaid
+flowchart TB
+start(start.sh) --> main["Run main()"]
+main --> build["Build flowyzer-init Docker image"]
+build --> entrypoint["Trigger entrypoint.sh"]
+
+    main --> docker_compose["Docker-compose pull and start"]
+    docker_compose --> faros_init["Start faros-init service"]
+    docker_compose --> init["Start init service"]
+    docker_compose --> bootloader["Start bootloader service"]
+    docker_compose --> db["Start db service"]
+    docker_compose --> db["etc.."]
+
+    entrypoint --> wait["Wait for db, airbyte, metabase, and hasura"]
+    wait --> airbyte_init["Run airbyte init script"]
+    wait --> hasura_init["Run hasura init script"]
+    wait --> metabase_init["Run metabase init script"]
+```
