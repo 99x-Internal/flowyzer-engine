@@ -39,6 +39,10 @@ The Root Dockerfile runs the `entrypoint.sh`.
 
   - Waits for the database, Airbyte, Metabase, and Hasura containers to be ready.
 
+- **DB Initialization**
+
+  - Runs the `./db-init.sh` script to initialize Database.
+
 - **Airbyte Initialization**
 
   - Runs the `node ../lib/airbyte/init` script for Airbyte, passing necessary arguments.

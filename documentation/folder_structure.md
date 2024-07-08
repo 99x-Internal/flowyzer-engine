@@ -31,8 +31,6 @@ flowchart TD
 
 ## /init/
 
-## /init/
-
 - **init**
   - **lib**
     - Contains all the compiled output files of the `src` folder's files.
@@ -168,19 +166,6 @@ flowchart TD
     F6 --> F6_1
     F6 --> F6_2
 ```
-
-## /resources/
-
-- **airbyte**
-  - **workspace**
-    - **config**: Contains config YAML files needed for Airbyte connection.
-- **hasura**
-  - Contains SQL files for listing tables.
-  - **endpoints**
-    - This folder contains GraphQL mutation files doing various operations such as inserting and updating artifacts, builds, and deployments.
-- **metabase**
-  - **dashboards**
-    - Contains Metabase configuration files for Metabase dashboards.
 
 ## /dbt-transforms/
 
