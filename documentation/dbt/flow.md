@@ -1,6 +1,6 @@
 ### Step-by-Step Workflow
 
-1. **User Initiates dbt:**
+1. **Docker Initiates dbt:**
 
    - The docker container starts the dbt process by running dbt commands (e.g., `dbt run`).
 
