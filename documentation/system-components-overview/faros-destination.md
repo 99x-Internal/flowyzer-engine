@@ -1,4 +1,4 @@
-🚀 Faros Destinations
+# 🚀 Faros Destinations
 
 The Faros Destination is the Airbyte destination connector that takes the data streams extracted by the Airbyte source connectors, and stores it in the Faros CE models. It comes as a pre-packaged and pre-configured destination in your Faros CE instance.
 
