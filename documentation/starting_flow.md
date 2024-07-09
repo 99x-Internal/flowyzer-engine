@@ -164,7 +164,7 @@ sequenceDiagram
 
 ### Initialization of Metabase, Hasura and Airbyte
 
-##### airbyte/init.ts
+#### airbyte/init.ts
 
 1. **Parse Command-line Options:**
 
@@ -225,7 +225,7 @@ sequenceDiagram
 
 ```
 
-##### hasura/init.ts
+#### hasura/init.ts
 
 1. **Initialization**:
 
@@ -302,7 +302,7 @@ sequenceDiagram
 
 ```
 
-### Metabase Initialization Script Overview
+#### metabase/init.ts
 
 1. **Initialization**:
 
@@ -336,8 +336,6 @@ sequenceDiagram
    - Catches and logs any errors that occur during script execution, ensuring the process exits with a non-zero status code upon encountering an error.
 
 This script provides functionality to interact with Metabase, enabling schema synchronization and dashboard management operations such as exporting and importing dashboards. It ensures that the Metabase instance is configured and managed according to the specified command-line options, facilitating automated setup and management tasks effectively.
-
-##### metabase/init.ts
 
 ```mermaid
 sequenceDiagram

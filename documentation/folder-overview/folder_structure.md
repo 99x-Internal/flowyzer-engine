@@ -1,12 +1,12 @@
 # File & Folder Structure
 
-- flowyzer-init
-  - Cannonical_Scema
-  - Cli
+- #### flowyzer-init
+  - [Cannonical_Scema](./canonical/tables_overview.md)
+  - [Cli](./cli/flow.md)
   - Configs
-  - dbt-transforms
+  - [dbt-transforms](./dbt/flow.md)
   - flowyzer-metabase-queries
-  - init
+  - [init](./init/overview.md)
   - temporal
 
 ```mermaid
