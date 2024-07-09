@@ -1,15 +1,15 @@
-### How Flowyzer starts
+# How Flowyzer starts
 
-- **start.sh script runs the main() fn**
-
-  - The main function builds the latest version of the `flowyzer-init` Docker image.
-
-- **Dockerfile**
-  - Uses the flyway Docker image as the base image.
-  - Creates a new user `flyway`.
-  - Sets up directory structure and copies project files to the directory.
-  - Copies the `canonical-schema` directory and scripts from the `init` directory into the image.
-  - Sets the ENTRYPOINT to `["./entrypoint.sh"]`.
+  - **start.sh script runs the main() fn**
+  
+    - The main function builds the latest version of the `flowyzer-init` Docker image.
+  
+  - **Dockerfile**
+    - Uses the flyway Docker image as the base image.
+    - Creates a new user `flyway`.
+    - Sets up directory structure and copies project files to the directory.
+    - Copies the `canonical-schema` directory and scripts from the `init` directory into the image.
+    - Sets the ENTRYPOINT to `["./entrypoint.sh"]`.
 
 ### Docker-compose
 
@@ -164,7 +164,7 @@ sequenceDiagram
 
 ### Initialization of Metabase, Hasura and Airbyte
 
-#### airbyte/init.ts
+### airbyte/init.ts
 
 1. **Parse Command-line Options:**
 
@@ -225,7 +225,7 @@ sequenceDiagram
 
 ```
 
-#### hasura/init.ts
+### hasura/init.ts
 
 1. **Initialization**:
 
@@ -302,7 +302,7 @@ sequenceDiagram
 
 ```
 
-#### metabase/init.ts
+### metabase/init.ts
 
 1. **Initialization**:
 
