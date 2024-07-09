@@ -29,7 +29,11 @@ flowchart TD
     A --> H
 ```
 
+[How Flowyzer Starts](./starting_flow.md)
+
+
 ## /init/
+[Overview of init](./init/overview.md)
 
 - **init**
   - **lib**
@@ -99,6 +103,7 @@ flowchart TD
 ```
 
 ## /cli/
+[Overview of cli](./cli/flow.md)
 
 The `cli` directory contains scripts and functionality for integrating with various external services and managing data synchronization processes.
 
@@ -168,8 +173,9 @@ flowchart TD
 ```
 
 ## /dbt-transforms/
+[Overview of dbt-transforms](./dbt/flow.md)
 
-The `dbt-transforms` folder configures and manages the dbt (data build tool) for transforming data in your application. Below is the detailed explanation of the folder contents:
+The `dbt-transforms` folder configures and manages the dbt (data build tool) for transforming data in your application.
 
 ### Files:
 
