@@ -1,6 +1,6 @@
-## Data transformation with DBT
+# Data transformation with DBT
 
-##### Things to note:
+#### Things to note:
 
 - We currently does not do any data-transformation using dbt by default
 
