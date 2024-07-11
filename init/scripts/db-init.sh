@@ -15,7 +15,6 @@ cfg_db_pass=${FAROS_CONFIG_DB_PASSWORD}
 
 hasura_db_name=${HASURA_DB_NAME}
 metabase_db_name=${METABASE_DB_NAME}
-n8n_db_name=${N8N_DB_NAME}
 
 create_database() {
   db_name=$1
@@ -46,4 +45,3 @@ flyway \
 
 create_database "$hasura_db_name" "$cfg_db_host" "$cfg_db_port" "$cfg_db_user" "$cfg_db_pass"
 create_database "$metabase_db_name" "$cfg_db_host" "$cfg_db_port" "$cfg_db_user" "$cfg_db_pass"
-create_database "$n8n_db_name" "$cfg_db_host" "$cfg_db_port" "$cfg_db_user" "$cfg_db_pass"
