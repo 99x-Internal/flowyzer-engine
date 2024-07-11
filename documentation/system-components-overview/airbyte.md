@@ -30,3 +30,17 @@ You created an Airbyte connection when you link a source and a destination toget
 - The frequency of the sync
 - The data streams (e.g., for GitHub - Users, Pull Requests, Commits, etc.) and their sync mode
 - The table prefix, which allows for namespacing before it is handed over to the destination
+
+## Architecture overview
+
+```mermaid
+graph TD
+    WebApp[WebApp/UI] -->|sends API requests| Server[Server/Config API]
+    Server -->|store data| ConfigDB[Config & Jobs]
+    Server -->|create workflow| Temporal
+    Temporal -->|launch task| Workers[1..n Airbyte Workers]
+    Workers -->|launches| Source
+    Workers -->|launches| Destination
+    Workers -->|return job| Temporal
+
+```
