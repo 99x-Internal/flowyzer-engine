@@ -44,3 +44,14 @@ graph TD
     Workers -->|return job| Temporal
 
 ```
+
+- **Web App/UI [airbyte-webapp, airbyte-proxy]:** An easy-to-use graphical interface for interacting with the Airbyte API.
+- **Server/Config API [airbyte-server, airbyte-server-api]:** Handles connection between UI and API. Airbyte's main control plane. All operations in Airbyte such as creating sources, destinations, connections, managing configurations, etc.. are configured and invoked from the API.
+- **Database Config & Jobs [airbyte-db]:** Stores all the connections information (credentials, frequency...).
+- **Temporal Service [airbyte-temporal]:** Manages the task queue and workflows.
+- **Worker [airbyte-worker]:** The worker connects to a source connector, pulls the data and writes it to a destination.
+
+##### The diagram shows the steady-state operation of Airbyte, there are components not described you'll see in your deployment:
+
+- **Cron [airbyte-cron]:** Clean the server and sync logs (when using local logs)
+- **Bootloader [airbyte-bootloader]:** Upgrade and Migrate the Database tables and confirm the enviroment is ready to work.
