@@ -7,7 +7,6 @@ x-logging: &default-logging
   driver: json-file
 services:
   faros-init:
-    # profiles: ["faros-init"]
     image: ${FAROS_INIT_IMAGE?}
     # 3 retries on failure
     restart: on-failure:3
@@ -108,7 +107,7 @@ services:
       - "5432:5432"
     networks:
       - airbyte_internal
-      - airbyte_public # Remove this before going live
+      - codalytix-hub
   worker:
     image: airbyte/worker:${VERSION}
     logging: *default-logging
@@ -194,7 +193,7 @@ services:
       - "9000"
     networks:
       - airbyte_internal
-      - airbyte_public
+      - codalytix-hub
     depends_on:
       bootloader:
         condition: service_completed_successfully
@@ -262,6 +261,7 @@ services:
       - ./configs:/app/configs:ro
     networks:
       - airbyte_internal
+      - codalytix-hub
     depends_on:
       bootloader:
         condition: service_completed_successfully
@@ -276,6 +276,7 @@ services:
       - KEYCLOAK_INTERNAL_HOST=localhost # placeholder to ensure the webapp's nginx config is valid
     networks:
       - airbyte_internal
+      - codalytix-hub
     depends_on:
       bootloader:
         condition: service_completed_successfully
@@ -331,6 +332,7 @@ services:
       - workspace:${WORKSPACE_ROOT}
     networks:
       - airbyte_internal
+      - codalytix-hub
     depends_on:
       bootloader:
         condition: service_completed_successfully
@@ -355,6 +357,7 @@ services:
       - TRACKING_STRATEGY=${TRACKING_STRATEGY}
     networks:
       - airbyte_internal
+      - codalytix-hub
     depends_on:
       bootloader:
         condition: service_completed_successfully
@@ -379,6 +382,7 @@ services:
       - TRACKING_STRATEGY=${TRACKING_STRATEGY}
     networks:
       - airbyte_internal
+      - codalytix-hub
     depends_on:
       bootloader:
         condition: service_completed_successfully
@@ -397,7 +401,7 @@ services:
       - BASIC_AUTH_PROXY_TIMEOUT=${BASIC_AUTH_PROXY_TIMEOUT}
     networks:
       - airbyte_internal
-      - airbyte_public
+      - codalytix-hub
     depends_on:
       - webapp
       - server
@@ -423,7 +427,7 @@ services:
       HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://${FLOWYZER_CONFIG_DB_USER?}:${FLOWYZER_CONFIG_DB_PASSWORD?}@${FLOWYZER_CONFIG_DB_HOST?}:${FLOWYZER_CONFIG_DB_PORT?}/${HASURA_DB_NAME?}
     networks:
       - airbyte_internal
-      - airbyte_public
+      - codalytix-hub   
   metabase:
     # profiles: ["flowyzer-services"]
     image: ${METABASE_IMAGE}:${METABASE_VERSION}
@@ -447,7 +451,7 @@ services:
       MB_SEND_EMAIL_ON_FIRST_LOGIN_FROM_NEW_DEVICE: "false"
     networks:
       - airbyte_internal
-      - airbyte_public
+      - codalytix-hub
   n8n:
     # profiles: ["flowyzer-services"]
     image: n8nio/n8n:${N8N_VERSION?}
@@ -471,7 +475,7 @@ services:
       N8N_VERSION_NOTIFICATIONS_ENABLED: "false"
     networks:
       - airbyte_internal
-      - airbyte_public
+      - codalytix-hub
     volumes:
       - n8n:/home/node/
 volumes:
@@ -492,5 +496,7 @@ configs:
   flags:
     file: ./flags.yml
 networks:
-  airbyte_public:
+  codalytix-hub:
+    name: codalytix-hub
+    external: true
   airbyte_internal:

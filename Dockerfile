@@ -14,7 +14,7 @@ COPY init/.tsconfig.json init/package.json init/package-lock.json ./
 COPY init/resources ./resources
 COPY init/src ./src
 RUN npm ci
-COPY canonical-schema ./canonical-schema
+COPY flowyzer-schemas ./flowyzer-schemas
 COPY init/scripts ./scripts
 WORKDIR /home/flyway/faros/scripts
 # ENTRYPOINT ["tail", "-f", "/dev/null"]
