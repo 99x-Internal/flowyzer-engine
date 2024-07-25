@@ -38,7 +38,7 @@ function parseFlags() {
 main() {
     # Check if .env fle exisits, if not rename env.dev to .env
     if [ ! -f .env ]; then
-        cp .env.flowyzer.engine .env
+        cp env.flowyzer.engine .env
     fi
 
     # Check if docker compose is running
