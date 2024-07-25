@@ -278,7 +278,7 @@ create table "tms_ProjectReleaseRelationship" (
   release text
 );
 create table "tms_Project" (
-  id text generated always as (pkey(source, uid)) stored primary key,
+  id text generated always as (pkey(organization, uid)) stored primary key,
   origin text,
   "refreshedAt" timestamptz not null default now(),
   uid text not null,
@@ -300,7 +300,7 @@ create table "tms_Release" (
   source text
 );
 create table "tms_Sprint" (
-  id text generated always as (pkey(source, uid)) stored primary key,
+  id text generated always as (pkey(organization, uid)) stored primary key,
   origin text,
   "refreshedAt" timestamptz not null default now(),
   uid text not null,
