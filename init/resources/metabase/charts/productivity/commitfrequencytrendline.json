@@ -1,0 +1,137 @@
+{
+    "name": "Productivity Commit Frequency Trend Line",
+    "description": "Trend line of commit frequency over the past 90 days",
+    "dataset_query": {
+      "database": 2,
+      "type": "query",
+      "query": {
+        "source-query": {
+          "source-query": {
+            "source-table": "card__129",
+            "filter": [
+              "and",
+              [
+                "not-empty",
+                [
+                  "field",
+                  "sha",
+                  {
+                    "base-type": "type/Text"
+                  }
+                ]
+              ],
+              [
+                "time-interval",
+                [
+                  "field",
+                  "commitCreatedAt",
+                  {
+                    "base-type": "type/DateTimeWithLocalTZ"
+                  }
+                ],
+                -90,
+                "day",
+                {
+                  "include-current": false
+                }
+              ]
+            ],
+            "aggregation": [
+              [
+                "count"
+              ]
+            ],
+            "breakout": [
+              [
+                "field",
+                "commitAuthorName",
+                {
+                  "base-type": "type/Text"
+                }
+              ],
+              [
+                "field",
+                "commitCreatedAt",
+                {
+                  "temporal-unit": "minute",
+                  "base-type": "type/DateTimeWithLocalTZ"
+                }
+              ]
+            ]
+          },
+          "joins": [
+            {
+              "fields": "all",
+              "source-table": "card__133",
+              "condition": [
+                "=",
+                [
+                  "field",
+                  "commitCreatedAt",
+                  {
+                    "base-type": "type/DateTimeWithLocalTZ",
+                    "temporal-unit": "week"
+                  }
+                ],
+                [
+                  "field",
+                  "weekStart",
+                  {
+                    "temporal-unit": "week",
+                    "base-type": "type/DateTimeWithLocalTZ",
+                    "join-alias": "Question 133"
+                  }
+                ]
+              ],
+              "alias": "Question 133",
+              "strategy": "right-join"
+            }
+          ],
+          "aggregation": [
+            [
+              "avg",
+              [
+                "field",
+                "count",
+                {
+                  "base-type": "type/Integer"
+                }
+              ]
+            ]
+          ],
+          "breakout": [
+            [
+              "field",
+              "weekStart",
+              {
+                "temporal-unit": "week",
+                "base-type": "type/DateTimeWithLocalTZ",
+                "join-alias": "Question 133"
+              }
+            ]
+          ]
+        },
+        "filter": [
+          "time-interval",
+          [
+            "field",
+            "weekStart",
+            {
+              "base-type": "type/DateTimeWithLocalTZ"
+            }
+          ],
+          -150,
+          "day",
+          {
+            "include-current": false
+          }
+        ]
+      }
+    },
+    "visualization_settings": {
+      "graph_type": "line"
+    },
+    "display": "line",
+    "collection_id": 14
+  }
+  
