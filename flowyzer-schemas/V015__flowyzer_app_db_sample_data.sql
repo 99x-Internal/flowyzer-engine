@@ -33,7 +33,7 @@ VALUES
 -- Inserting into flowyzer_users
 INSERT INTO "flowyzer_users" ("id", "email", "name", "profileImg", "createdAt", "updatedAt")
 VALUES
-('01008ea5-b677-4727-9b51-49293fbad342', 'surenr@99x.io', 'Suren Rodrigo', '', '2024-06-18T05:33:23.396Z', '2024-06-18T05:33:23.396Z');
+('01008ea5-b677-4727-9b51-49293fbad342', 'surenr@99domain.io', 'Suren Rodrigo', '', '2024-06-18T05:33:23.396Z', '2024-06-18T05:33:23.396Z');
 
 -- Insert into flowyzer_users_roles_associations
 INSERT INTO "flowyzer_users_roles_associations" ("id", "user_id", "role_id", "created_date", "description")
