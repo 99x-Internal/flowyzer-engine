@@ -451,35 +451,8 @@ services:
       MB_SEND_EMAIL_ON_FIRST_LOGIN_FROM_NEW_DEVICE: "false"
     networks:
       - airbyte_internal
-<<<<<<< HEAD
-      - airbyte_public
-  n8n:
-    # profiles: ["flowyzer-services"]
-    image: n8nio/n8n:${N8N_VERSION?}
-    container_name: n8n
-    ports:
-      - ${N8N_PORT?}:5678
-    depends_on:
-      faros-init:
-          condition: service_healthy
-    restart: unless-stopped
-    environment:
-      DB_TYPE: postgresdb
-      DB_POSTGRESDB_HOST: ${FLOWYZER_CONFIG_DB_HOST?}
-      DB_POSTGRESDB_PORT: ${FLOWYZER_CONFIG_DB_PORT?}
-      DB_POSTGRESDB_DATABASE: ${N8N_DB_NAME?}
-      DB_POSTGRESDB_SCHEMA: public
-      DB_POSTGRESDB_USER: ${FLOWYZER_CONFIG_DB_USER?}
-      DB_POSTGRESDB_PASSWORD: ${FLOWYZER_CONFIG_DB_PASSWORD?}
-      N8N_PERSONALIZATION_ENABLED: "false"
-      N8N_DIAGNOSTICS_ENABLED: "false"
-      N8N_VERSION_NOTIFICATIONS_ENABLED: "false"
-    networks:
-      - airbyte_internal
-      - airbyte_public
-    volumes:
-      - n8n:/home/node/
-
+      - codalytix-hub
+  
 #supabase
   studio:
     container_name: supabase-studio
@@ -664,12 +637,7 @@ services:
     command: ['--config', 'etc/vector/vector.yml']
     networks:
       - airbyte_internal
-      - airbyte_public
-
-
-=======
       - codalytix-hub
->>>>>>> main-candidate
 volumes:
   workspace:
     name: ${WORKSPACE_DOCKER_MOUNT}
@@ -682,12 +650,6 @@ volumes:
     name: ${DATA_DOCKER_MOUNT}
   db:
     name: ${DB_DOCKER_MOUNT}
-<<<<<<< HEAD
-  n8n:
-    name: ${N8N_DOCKER_MOUNT}
-  db-config:
-=======
->>>>>>> main-candidate
 configs:
   flags:
     file: ./flags.yml
