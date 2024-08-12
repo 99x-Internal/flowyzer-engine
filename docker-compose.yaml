@@ -650,6 +650,7 @@ volumes:
     name: ${DATA_DOCKER_MOUNT}
   db:
     name: ${DB_DOCKER_MOUNT}
+  db-config:
 configs:
   flags:
     file: ./flags.yml
