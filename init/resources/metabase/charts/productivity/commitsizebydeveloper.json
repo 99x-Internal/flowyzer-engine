@@ -1,0 +1,198 @@
+{
+    "name": "Productivity Commit Size By Developer",
+    "description": "Trend line of code changes over the past 90 days by developer",
+    "dataset_query": {
+      "database": 2,
+      "type": "query",
+      "query": {
+          "source-query": {
+          "source-table": "card__129",
+          "filter": [
+              "and",
+              [
+              "not-empty",
+              [
+                  "field",
+                  "sha",
+                  {
+                  "base-type": "type/Text"
+                  }
+              ]
+              ]
+          ],
+          "breakout": [
+              [
+              "field",
+              "prCommitId",
+              {
+                  "base-type": "type/Text"
+              }
+              ],
+              [
+              "field",
+              "commitAuthorName",
+              {
+                  "base-type": "type/Text"
+              }
+              ]
+          ],
+          "aggregation": [
+              [
+              "min",
+              [
+                  "field",
+                  "linesAdded",
+                  {
+                  "base-type": "type/Integer"
+                  }
+              ]
+              ],
+              [
+              "min",
+              [
+                  "field",
+                  "linesDeleted",
+                  {
+                  "base-type": "type/Integer"
+                  }
+              ]
+              ],
+              [
+              "min",
+              [
+                  "field",
+                  "linesChanged",
+                  {
+                  "base-type": "type/Integer"
+                  }
+              ]
+              ]
+          ]
+          },
+          "expressions": {
+          "totalChanges": [
+              "+",
+              [
+              "field",
+              "min",
+              {
+                  "base-type": "type/Float"
+              }
+              ],
+              [
+              "field",
+              "min_3",
+              {
+                  "base-type": "type/Float"
+              }
+              ],
+              [
+              "field",
+              "min_2",
+              {
+                  "base-type": "type/Float"
+              }
+              ]
+          ]
+          },
+          "aggregation": [
+          [
+              "avg",
+              [
+              "expression",
+              "totalChanges"
+              ]
+          ],
+          [
+              "avg",
+              [
+              "field",
+              "min",
+              {
+                  "base-type": "type/Float"
+              }
+              ]
+          ],
+          [
+              "avg",
+              [
+              "field",
+              "min_2",
+              {
+                  "base-type": "type/Float"
+              }
+              ]
+          ],
+          [
+              "avg",
+              [
+              "field",
+              "min_3",
+              {
+                  "base-type": "type/Float"
+              }
+              ]
+          ]
+          ],
+          "breakout": [
+          [
+              "field",
+              "commitAuthorName",
+              {
+              "base-type": "type/Text"
+              }
+          ]
+          ]
+      
+      },
+      "expressions": {
+        "totalChanges": [
+          "case",
+          [
+            [
+              ">",
+              [
+                "field",
+                "avg",
+                {
+                  "base-type": "type/Float"
+                }
+              ],
+              0
+            ],
+            [
+              "field",
+              "avg",
+              {
+                "base-type": "type/Float"
+              }
+            ]
+          ],
+          {
+            "default": 0
+          }
+        ]
+      },
+      "filter": [
+        "time-interval",
+        [
+          "field",
+          "weekStart",
+          {
+            "base-type": "type/DateTimeWithLocalTZ"
+          }
+        ],
+        -90,
+        "day",
+        {
+          "include-current": false
+        }
+      ]
+    },
+    "visualization_settings": {
+      "graph_type": "bar"
+    },
+    "display": "bar",
+    "collection_id": 14
+  }
+  

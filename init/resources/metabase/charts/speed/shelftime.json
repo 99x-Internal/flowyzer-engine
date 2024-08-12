@@ -1,0 +1,38 @@
+{
+    "name": "Shelf Time",
+    "dataset_query": {
+      "database": 2,
+      "type": "query",
+      "query": {
+      "aggregation": [
+          [
+              "avg",
+              [
+                  "field",
+                  "ShelfTime",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ]
+          ]
+      ],
+      "breakout": [
+          [
+              "field",
+              "prCreatedAt",
+              {
+                  "base-type": "type/DateTimeWithLocalTZ",
+                  "temporal-unit": "month"
+              }
+          ]
+      ],
+      "source-table": "card__352"
+  }
+    },
+    "visualization_settings": {
+      "graph_type": "line"
+    },
+    "display": "line",
+    "collection_id": 60
+  }
+  

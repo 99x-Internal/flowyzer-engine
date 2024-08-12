@@ -1,0 +1,14 @@
+{
+    "name": "AbstractLayer | Months",
+    "dataset_query": {
+      "database": 2,
+      "type": "native",
+      "native": {
+        "query": "SELECT *, to_char(month, 'Month YYYY') AS \"displayMonth\" FROM (SELECT date_trunc('month', dates.d) AS \"month\" FROM generate_series('2023-01-01'::date, '2043-12-31'::date, '1 month'::interval) AS dates(d) GROUP BY 1 ORDER BY 1) AS d"
+      }
+    },
+    "display": "table",
+    "collection_id": 13,
+    "visualization_settings": {}
+  }
+  
