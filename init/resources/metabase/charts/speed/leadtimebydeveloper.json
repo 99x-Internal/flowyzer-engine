@@ -1,0 +1,119 @@
+{
+  "name": "Lead time by Developer",
+  "dataset_query": {
+    "database": 2,
+    "type": "query",
+    "query": {
+        "aggregation": [
+            [
+                "avg",
+                [
+                    "field",
+                    "ShelfTime",
+                    {
+                        "base-type": "type/Float"
+                    }
+                ]
+            ],
+            [
+                "avg",
+                [
+                    "field",
+                    "TaskPickupTime",
+                    {
+                        "base-type": "type/Float"
+                    }
+                ]
+            ],
+            [
+                "avg",
+                [
+                    "field",
+                    "CodingTime",
+                    {
+                        "base-type": "type/Float"
+                    }
+                ]
+            ],
+            [
+                "avg",
+                [
+                    "field",
+                    "ReviewPickupTime",
+                    {
+                        "base-type": "type/Float"
+                    }
+                ]
+            ],
+            [
+                "avg",
+                [
+                    "field",
+                    "ReviewTime",
+                    {
+                        "base-type": "type/Float"
+                    }
+                ]
+            ]
+        ],
+        "breakout": [
+            [
+                "field",
+                "commitAuthorName",
+                {
+                    "base-type": "type/Text"
+                }
+            ]
+        ],
+        "source-table": "card__351"
+    },
+    "expressions": {
+      "netChanges": [
+        "case",
+        [
+          [
+            ">",
+            [
+              "field",
+              "sum",
+              {
+                "base-type": "type/Float"
+              }
+            ],
+            0
+          ],
+          [
+            "field",
+            "sum",
+            {
+              "base-type": "type/Float"
+            }
+          ]
+        ],
+        {
+          "default": 0
+        }
+      ]
+    },
+    "filter": [
+      "time-interval",
+      [
+        "field",
+        "weekStart",
+        {
+          "base-type": "type/DateTimeWithLocalTZ"
+        }
+      ],
+      -90,
+      "day",
+      {
+        "include-current": false
+      }
+    ]
+  },
+  "visualization_settings": {
+    "graph_type": "bar"
+  },
+  "display": "bar",
+  "collection_id": 60
+}

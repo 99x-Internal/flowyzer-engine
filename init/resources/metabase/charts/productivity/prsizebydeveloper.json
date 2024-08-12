@@ -1,0 +1,121 @@
+{
+    "name": "PR Size By Developer",
+    "description": "Trend line of pr size over the past 120 days",
+    "dataset_query": {
+      "database": 2,
+      "type": "query",
+        "query": {
+      "source-query": {
+        "source-table": "card__129",
+        "filter": [
+          "and",
+          [
+            "not-empty",
+            [
+              "field",
+              "sha",
+              {
+                "base-type": "type/Text"
+              }
+            ]
+          ]
+        ],
+        "aggregation": [
+          [
+            "sum",
+            [
+              "field",
+              "linesAdded",
+              {
+                "base-type": "type/Integer"
+              }
+            ]
+          ],
+          [
+            "sum",
+            [
+              "field",
+              "linesDeleted",
+              {
+                "base-type": "type/Integer"
+              }
+            ]
+          ],
+          [
+            "sum",
+            [
+              "field",
+              "linesChanged",
+              {
+                "base-type": "type/Integer"
+              }
+            ]
+          ]
+        ],
+        "breakout": [
+          [
+            "field",
+            "prId",
+            {
+              "base-type": "type/Text"
+            }
+          ],
+          [
+            "field",
+            "commitAuthorName",
+            {
+              "base-type": "type/Text"
+            }
+          ]
+        ]
+      },
+      "aggregation": [
+        [
+          "avg",
+          [
+            "field",
+            "sum",
+            {
+              "base-type": "type/Float"
+            }
+          ]
+        ],
+        [
+          "avg",
+          [
+            "field",
+            "sum_3",
+            {
+              "base-type": "type/Float"
+            }
+          ]
+        ],
+        [
+          "avg",
+          [
+            "field",
+            "sum_2",
+            {
+              "base-type": "type/Float"
+            }
+          ]
+        ]
+      ],
+      "breakout": [
+        [
+          "field",
+          "commitAuthorName",
+          {
+            "base-type": "type/Text"
+          }
+        ]
+      ]
+    }
+    },
+    "visualization_settings": {
+      "graph_type": "bar"
+    },
+    "display": "bar",
+    "collection_id": 14
+  }
+  
