@@ -15,7 +15,6 @@ cfg_db_pass=${FAROS_CONFIG_DB_PASSWORD}
 
 hasura_db_name=${HASURA_DB_NAME}
 metabase_db_name=${METABASE_DB_NAME}
-n8n_db_name=${N8N_DB_NAME}
 
 create_database() {
   db_name=$1
@@ -38,7 +37,7 @@ create_database "$faros_db_name" "$faros_db_host" "$faros_db_port" "$faros_db_us
 
 echo "Applying Flyway migrations"
 flyway \
-  -locations="filesystem:/home/flyway/faros/canonical-schema" \
+  -locations="filesystem:/home/flyway/faros/flowyzer-schemas" \
   -url="jdbc:postgresql://$faros_db_host:$faros_db_port/$faros_db_name" \
   -user="$faros_db_user" \
   -password="$faros_db_pass" \
@@ -46,4 +45,3 @@ flyway \
 
 create_database "$hasura_db_name" "$cfg_db_host" "$cfg_db_port" "$cfg_db_user" "$cfg_db_pass"
 create_database "$metabase_db_name" "$cfg_db_host" "$cfg_db_port" "$cfg_db_user" "$cfg_db_pass"
-create_database "$n8n_db_name" "$cfg_db_host" "$cfg_db_port" "$cfg_db_user" "$cfg_db_pass"

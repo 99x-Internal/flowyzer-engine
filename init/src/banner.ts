@@ -1,11 +1,11 @@
 import figlet from 'figlet';
 import {max} from 'lodash';
 
-const READY_MSG = 'Faros Community Edition is ready!';
+const READY_MSG = 'Flowyzer Engine is ready!';
 
 function main(): void {
   const columns = process.stdout.columns ?? 80;
-  const faros = figlet.textSync('Faros', {
+  const faros = figlet.textSync('Flowyzer', {
     horizontalLayout: 'fitted',
     verticalLayout: 'fitted',
     whitespaceBreak: true,

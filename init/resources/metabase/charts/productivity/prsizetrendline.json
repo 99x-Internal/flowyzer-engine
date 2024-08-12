@@ -1,0 +1,197 @@
+{
+    "name": "Productivity PR Size Trend Line",
+    "description": "Trend line of PR size over the past 90 days",
+    "dataset_query": {
+      "database": 2,
+      "type": "query",
+      "query": {
+      "expressions": {
+          "totalChange": [
+              "+",
+              [
+                  "field",
+                  "sum",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ],
+              [
+                  "field",
+                  "sum_3",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ],
+              [
+                  "field",
+                  "sum_2",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ]
+          ]
+      },
+      "joins": [
+          {
+              "fields": "all",
+              "alias": "Question 133",
+              "condition": [
+                  "=",
+                  [
+                      "field",
+                      "prCreatedAt",
+                      {
+                          "base-type": "type/DateTimeWithLocalTZ",
+                          "temporal-unit": "week"
+                      }
+                  ],
+                  [
+                      "field",
+                      "weekStart",
+                      {
+                          "base-type": "type/DateTimeWithLocalTZ",
+                          "join-alias": "Question 133",
+                          "temporal-unit": "week"
+                      }
+                  ]
+              ],
+              "source-table": "card__133"
+          }
+      ],
+      "aggregation": [
+          [
+              "avg",
+              [
+                  "expression",
+                  "totalChange",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ]
+          ],
+          [
+              "avg",
+              [
+                  "field",
+                  "sum",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ]
+          ],
+          [
+              "avg",
+              [
+                  "field",
+                  "sum_3",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ]
+          ],
+          [
+              "avg",
+              [
+                  "field",
+                  "sum_2",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ]
+          ]
+      ],
+      "breakout": [
+          [
+              "field",
+              "weekStart",
+              {
+                  "temporal-unit": "week",
+                  "base-type": "type/DateTimeWithLocalTZ",
+                  "join-alias": "Question 133"
+              }
+          ]
+      ],
+      "filter": [
+          "time-interval",
+          [
+              "field",
+              "weekStart",
+              {
+                  "base-type": "type/DateTimeWithLocalTZ",
+                  "join-alias": "Question 133"
+              }
+          ],
+          -90,
+          "day"
+      ],
+      "source-query": {
+          "aggregation": [
+              [
+                  "sum",
+                  [
+                      "field",
+                      "linesAdded",
+                      {
+                          "base-type": "type/Integer"
+                      }
+                  ]
+              ],
+              [
+                  "sum",
+                  [
+                      "field",
+                      "linesDeleted",
+                      {
+                          "base-type": "type/Integer"
+                      }
+                  ]
+              ],
+              [
+                  "sum",
+                  [
+                      "field",
+                      "linesChanged",
+                      {
+                          "base-type": "type/Integer"
+                      }
+                  ]
+              ]
+          ],
+          "breakout": [
+              [
+                  "field",
+                  "prId",
+                  {
+                      "base-type": "type/Text"
+                  }
+              ],
+              [
+                  "field",
+                  "prCreatedAt",
+                  {
+                      "temporal-unit": "minute",
+                      "base-type": "type/DateTimeWithLocalTZ"
+                  }
+              ]
+          ],
+          "source-table": "card__129",
+          "filter": [
+              "not-empty",
+              [
+                  "field",
+                  "sha",
+                  {
+                      "base-type": "type/Text"
+                  }
+              ]
+          ]
+      }
+      }
+    },
+    "visualization_settings": {
+      "graph_type": "line"
+    },
+    "display": "line",
+    "collection_id": 14
+  }
+  

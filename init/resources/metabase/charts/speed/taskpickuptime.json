@@ -1,0 +1,49 @@
+{
+    "name": "Task Pickup Time",
+    "dataset_query": {
+      "database": 2,
+      "type": "query",
+      "query": {
+          "aggregation": [
+              [
+                  "avg",
+                  [
+                      "field",
+                      "TaskPickupTime",
+                      {
+                          "base-type": "type/Float"
+                      }
+                  ]
+              ]
+          ],
+          "breakout": [
+              [
+                  "field",
+                  "prMergedAt",
+                  {
+                      "base-type": "type/DateTimeWithLocalTZ",
+                      "temporal-unit": "month"
+                  }
+              ]
+          ],
+          "source-table": "card__352",
+          "filter": [
+              "=",
+              [
+                  "field",
+                  "orgUID",
+                  {
+                      "base-type": "type/Text"
+                  }
+              ],
+              "BUS-AS-Norway"
+          ]
+      }
+    },
+    "visualization_settings": {
+      "graph_type": "line"
+    },
+    "display": "line",
+    "collection_id": 60
+  }
+  

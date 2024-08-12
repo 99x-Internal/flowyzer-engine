@@ -1,0 +1,137 @@
+{
+    "name": "Lead Time Trend Line",
+    "dataset_query": {
+      "database": 2,
+      "type": "query",
+      "query": {
+      "breakout": [
+          [
+              "field",
+              "prCreatedAt",
+              {
+                  "base-type": "type/DateTimeWithLocalTZ",
+                  "temporal-unit": "month"
+              }
+          ]
+      ],
+      "aggregation": [
+          [
+              "aggregation-options",
+              [
+                  "sum",
+                  [
+                      "+",
+                      [
+                          "field",
+                          "TaskPickupTime",
+                          {
+                              "base-type": "type/Float"
+                          }
+                      ],
+                      [
+                          "field",
+                          "ShelfTime",
+                          {
+                              "base-type": "type/Float"
+                          }
+                      ],
+                      [
+                          "field",
+                          "CodingTime",
+                          {
+                              "base-type": "type/Float"
+                          }
+                      ],
+                      [
+                          "field",
+                          "ReviewPickupTime",
+                          {
+                              "base-type": "type/Float"
+                          }
+                      ],
+                      [
+                          "field",
+                          "ReviewTime",
+                          {
+                              "base-type": "type/Float"
+                          }
+                      ]
+                  ]
+              ],
+              {
+                  "name": "Lead time",
+                  "display-name": "Lead time"
+              }
+          ],
+          [
+              "sum",
+              [
+                  "field",
+                  "ShelfTime",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ]
+          ],
+          [
+              "sum",
+              [
+                  "field",
+                  "TaskPickupTime",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ]
+          ],
+          [
+              "sum",
+              [
+                  "field",
+                  "CodingTime",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ]
+          ],
+          [
+              "sum",
+              [
+                  "field",
+                  "ReviewPickupTime",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ]
+          ],
+          [
+              "sum",
+              [
+                  "field",
+                  "ReviewTime",
+                  {
+                      "base-type": "type/Float"
+                  }
+              ]
+          ]
+      ],
+      "source-table": "card__352",
+      "filter": [
+          "=",
+          [
+              "field",
+              "orgUID",
+              {
+                  "base-type": "type/Text"
+              }
+          ],
+          "BUS-AS-Norway"
+      ]
+  }
+    },
+    "visualization_settings": {
+      "graph_type": "line"
+    },
+    "display": "line",
+    "collection_id": 60
+  }
+  

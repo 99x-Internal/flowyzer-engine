@@ -1,0 +1,195 @@
+{
+    "name": "Total Lead Time",
+    "dataset_query": {
+      "database": 2,
+      "type": "query",
+      "query": {
+          "aggregation": [
+              [
+                  "avg",
+                  [
+                      "field",
+                      "ShelfTime",
+                      {
+                          "base-type": "type/Float"
+                      }
+                  ]
+              ],
+              [
+                  "avg",
+                  [
+                      "field",
+                      "TaskPickupTime",
+                      {
+                          "base-type": "type/Float"
+                      }
+                  ]
+              ],
+              [
+                  "avg",
+                  [
+                      "field",
+                      "CodingTime",
+                      {
+                          "base-type": "type/Float"
+                      }
+                  ]
+              ],
+              [
+                  "avg",
+                  [
+                      "field",
+                      "ReviewPickupTime",
+                      {
+                          "base-type": "type/Float"
+                      }
+                  ]
+              ],
+              [
+                  "avg",
+                  [
+                      "field",
+                      "ReviewTime",
+                      {
+                          "base-type": "type/Float"
+                      }
+                  ]
+              ],
+              [
+                  "aggregation-options",
+                  [
+                      "avg",
+                      [
+                          "+",
+                          [
+                              "field",
+                              "ShelfTime",
+                              {
+                                  "base-type": "type/Float"
+                              }
+                          ],
+                          [
+                              "field",
+                              "TaskPickupTime",
+                              {
+                                  "base-type": "type/Float"
+                              }
+                          ],
+                          [
+                              "field",
+                              "CodingTime",
+                              {
+                                  "base-type": "type/Float"
+                              }
+                          ],
+                          [
+                              "field",
+                              "ReviewPickupTime",
+                              {
+                                  "base-type": "type/Float"
+                              }
+                          ],
+                          [
+                              "field",
+                              "ReviewTime",
+                              {
+                                  "base-type": "type/Float"
+                              }
+                          ]
+                      ]
+                  ],
+                  {
+                      "name": "Lead time total ",
+                      "display-name": "Lead time total "
+                  }
+              ]
+          ],
+          "breakout": [
+              [
+                  "field",
+                  "prCreatedAt",
+                  {
+                      "base-type": "type/DateTimeWithLocalTZ",
+                      "temporal-unit": "month"
+                  }
+              ]
+          ],
+          "source-table": "card__352",
+          "filter": [
+              "and",
+              [
+                  "=",
+                  [
+                      "field",
+                      "orgUID",
+                      {
+                          "base-type": "type/Text"
+                      }
+                  ],
+                  "BUS-AS-Norway"
+              ],
+              [
+                  "time-interval",
+                  [
+                      "field",
+                      "prCreatedAt",
+                      {
+                          "base-type": "type/DateTimeWithLocalTZ"
+                      }
+                  ],
+                  -1,
+                  "month"
+              ]
+          ]
+      },
+      "expressions": {
+        "netChanges": [
+          "case",
+          [
+            [
+              ">",
+              [
+                "field",
+                "sum",
+                {
+                  "base-type": "type/Float"
+                }
+              ],
+              0
+            ],
+            [
+              "field",
+              "sum",
+              {
+                "base-type": "type/Float"
+              }
+            ]
+          ],
+          {
+            "default": 0
+          }
+        ]
+      },
+      "filter": [
+        "time-interval",
+        [
+          "field",
+          "weekStart",
+          {
+            "base-type": "type/DateTimeWithLocalTZ"
+          }
+        ],
+        -90,
+        "day",
+        {
+          "include-current": false
+        }
+      ]
+    },
+    "visualization_settings": {
+      "graph_type": "bar"
+    },
+    "display": "bar",
+    "collection_id": 60
+  }
+  
