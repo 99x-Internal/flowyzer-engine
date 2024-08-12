@@ -2,24 +2,6 @@
 
 set -eo pipefail
 
-email_prompt() {
-    read -p "Please provide us with your email address: " EMAIL
-    while true; do
-        if [ -z "$EMAIL" ]; then
-            break
-        fi
-        read -p "Is this email correct? $EMAIL - [y/n]: " yn
-        case $yn in
-        [Yy]*) break ;;
-        [Nn]*)
-            email_prompt
-            exit 1
-            ;;
-        esac
-    done
-    printf "Thank you! 🙏\n"
-}
-
 function parseFlags() {
     while (($#)); do
         case "$1" in
