@@ -25,6 +25,8 @@ const CONFIG = {
   ),
 };
 
+let cards: number[] = [];
+
 interface DashboardResponse {
   data: {
     id: number;
@@ -144,11 +146,11 @@ async function getOrCreateCollection(
   token: string,
   name: string,
   parentId?: number
-): Promise<number> {
+) {
   let collectionId = await checkIfCollection(token, name);
-  if (collectionId === null) {
-    collectionId = await createCollection(token, name, parentId);
-  }
+  // if (collectionId === null) {
+  //   collectionId = await createCollection(token, name, parentId);
+  // }
   return collectionId;
 }
 
@@ -175,7 +177,7 @@ async function createQuery(
 async function createMetabaseQueries(
   queriesDir: string,
   token: string,
-  collectionId: number
+  collectionId: any
 ): Promise<number[]> {
   const queryIds = [];
   const files = fs.readdirSync(queriesDir);
@@ -502,6 +504,27 @@ async function updateDashboards(
   }
 }
 
+function printCardNo(){
+  const [
+    productivityCardId,
+    leadTimebyPrCardId,
+    prlosscardId,
+    weekscardId,
+    leadTimebyPrCardIdwithCommit,
+    repolist,
+    repolistFiltered,
+    months
+  ] = cards;
+  console.log('Abstract layer | Productivity - ', productivityCardId)
+  console.log('Abstract layer | LeadTimeByPR-V2 - ', leadTimebyPrCardId)
+  console.log('Abstract Layer | Productivity | PR Loss - ', prlosscardId)
+  console.log('Weeks List- ', weekscardId)
+  console.log('Months List - ', months)
+  console.log('Abstract layer | LeadTimeByPR With Commit Author-V2 - ', leadTimebyPrCardIdwithCommit)
+  console.log('Repolist - ', repolist)
+  console.log('RepoLists, Filtered by repoName - ', repolistFiltered)
+}
+
 async function setup(
   metabaseQueriesDir: string,
   speed_chrt_dir: string,
@@ -510,66 +533,77 @@ async function setup(
   try {
     const token = await getSessionToken();
     let collectionId = await getOrCreateCollection(token, 'Flowyzer');
-    const queriesCollectionId = await getOrCreateCollection(
-      token,
-      'metabase-queries',
-      collectionId
-    );
-
-    const queryIds = await createMetabaseQueries(
-      metabaseQueriesDir,
-      token,
-      queriesCollectionId
-    );
-
-    if (queryIds && queryIds.length > 3) {
-      const productivityCardId = queryIds[3];
-      const leadTimebyPrCardId = queryIds[4];
-      const prlosscardId = queryIds[2];
-      const weekscardId = queryIds[7];
-      const leadTimebyPrCardIdwithCommit = queryIds[5];
-      const cards = [
-        productivityCardId,
-        leadTimebyPrCardId,
-        prlosscardId,
-        weekscardId,
-        leadTimebyPrCardIdwithCommit,
-      ];
-
-      const speed_collection_id = await createCollection(
+    if(collectionId == null){
+      collectionId = await createCollection(token, 'Flowyzer');
+      const queriesCollectionId = await getOrCreateCollection(
         token,
-        'Speed Charts',
+        'metabase-queries',
         collectionId
       );
-      const prod_collection_id = await createCollection(
+  
+      const queryIds = await createMetabaseQueries(
+        metabaseQueriesDir,
         token,
-        'Productivity Charts',
-        collectionId
+        queriesCollectionId
       );
-      const speed_chartids = await createSpeedCharts(
-        speed_chrt_dir,
-        token,
-        speed_collection_id,
-        cards
-      );
-      const prod_chartids = await createProdCharts(
-        prod_chrt_dir,
-        token,
-        prod_collection_id,
-        cards
-      );
-
-      logger.info(speed_chartids, 'Speed Charts', prod_chartids, 'Prod Charts');
-
-      const dashboards = await createDashboards(token, collectionId);
-      const [speed_dash_Id, producitivity_dash_Id] = dashboards || [];
-      const cardIDs = [speed_chartids, prod_chartids];
-
-      if (speed_dash_Id !== undefined && producitivity_dash_Id !== undefined) {
-        updateDashboards(token, speed_dash_Id, producitivity_dash_Id, cardIDs);
-      } else {
-        logger.error('Dashboard IDs must be defined');
+  
+      if (queryIds && queryIds.length > 3) {
+        const productivityCardId = queryIds[3];
+        const leadTimebyPrCardId = queryIds[4];
+        const prlosscardId = queryIds[2];
+        const weekscardId = queryIds[7];
+        const leadTimebyPrCardIdwithCommit = queryIds[5];
+        const repolist = queryIds[8]
+        const repolistFiltered = queryIds[9]
+        const months = queryIds[6]
+        cards = [
+          productivityCardId,
+          leadTimebyPrCardId,
+          prlosscardId,
+          weekscardId,
+          leadTimebyPrCardIdwithCommit,
+          repolist,
+          repolistFiltered,
+          months
+        ];
+  
+        const speed_collection_id = await createCollection(
+          token,
+          'Speed Charts',
+          collectionId
+        );
+        const prod_collection_id = await createCollection(
+          token,
+          'Productivity Charts',
+          collectionId
+        );
+        const speed_chartids = await createSpeedCharts(
+          speed_chrt_dir,
+          token,
+          speed_collection_id,
+          cards
+        );
+        const prod_chartids = await createProdCharts(
+          prod_chrt_dir,
+          token,
+          prod_collection_id,
+          cards
+        );
+  
+        // logger.info(speed_chartids, 'Speed Charts', prod_chartids, 'Prod Charts');
+  
+        const dashboards = await createDashboards(token, collectionId);
+        const [speed_dash_Id, producitivity_dash_Id] = dashboards || [];
+        const cardIDs = [speed_chartids, prod_chartids];
+  
+        if (speed_dash_Id !== undefined && producitivity_dash_Id !== undefined) {
+          updateDashboards(token, speed_dash_Id, producitivity_dash_Id, cardIDs);
+        } else {
+          logger.error('Dashboard IDs must be defined');
+        }
       }
+
+      printCardNo()
     }
   } catch (error) {
     logger.error('Error setting up Metabase:', error);
