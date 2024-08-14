@@ -1,0 +1,971 @@
+{
+    "sourceId": "347222f5-d53d-4a0e-a42b-38c713bcf33b",
+    "destinationId": "ad9f2a08-5048-40a7-97a6-de94087fc06e",
+    "syncCatalog": {
+        "streams": [
+            {
+                "config": {
+                    "syncMode": "incremental",
+                    "cursorField": [
+                        "committer",
+                        "date"
+                    ],
+                    "destinationSyncMode": "append_dedup",
+                    "primaryKey": [
+                        [
+                            "commitId"
+                        ]
+                    ],
+                    "aliasName": "commits",
+                    "selected": true
+                },
+                "stream": {
+                    "name": "commits",
+                    "jsonSchema": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "type": "object",
+                        "properties": {
+                            "commitId": {
+                                "type": "string"
+                            },
+                            "comment": {
+                                "type": "string"
+                            },
+                            "url": {
+                                "type": "string"
+                            },
+                            "author": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "date": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "committer": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "date": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "changeCounts": {
+                                "type": "object",
+                                "properties": {
+                                    "Edit": {
+                                        "type": [
+                                            "number",
+                                            "null"
+                                        ]
+                                    },
+                                    "Add": {
+                                        "type": [
+                                            "number",
+                                            "null"
+                                        ]
+                                    },
+                                    "Delete": {
+                                        "type": [
+                                            "number",
+                                            "null"
+                                        ]
+                                    }
+                                }
+                            },
+                            "repository": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "url": {
+                                        "type": "string"
+                                    },
+                                    "project": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "state": {
+                                                "type": "string"
+                                            },
+                                            "visibility": {
+                                                "type": "string"
+                                            },
+                                            "lastUpdateTime": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "supportedSyncModes": [
+                        "full_refresh",
+                        "incremental"
+                    ],
+                    "sourceDefinedCursor": true,
+                    "defaultCursorField": [
+                        "committer",
+                        "date"
+                    ],
+                    "sourceDefinedPrimaryKey": [
+                        [
+                            "commitId"
+                        ]
+                    ]
+                }
+            },
+            {
+                "config": {
+                    "syncMode": "incremental",
+                    "cursorField": [
+                        "closedDate"
+                    ],
+                    "destinationSyncMode": "append_dedup",
+                    "primaryKey": [
+                        [
+                            "pullRequestId"
+                        ]
+                    ],
+                    "aliasName": "pull_requests",
+                    "selected": true
+                },
+                "stream": {
+                    "name": "pull_requests",
+                    "jsonSchema": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "type": "object",
+                        "properties": {
+                            "repository": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "url": {
+                                        "type": "string"
+                                    },
+                                    "project": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "state": {
+                                                "type": "string"
+                                            },
+                                            "visibility": {
+                                                "type": "string"
+                                            },
+                                            "lastUpdateTime": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "pullRequestId": {
+                                "type": "number"
+                            },
+                            "codeReviewId": {
+                                "type": "number"
+                            },
+                            "status": {
+                                "type": "string"
+                            },
+                            "createdBy": {
+                                "type": "object",
+                                "properties": {
+                                    "displayName": {
+                                        "type": "string"
+                                    },
+                                    "url": {
+                                        "type": "string"
+                                    },
+                                    "_links": {
+                                        "type": "object",
+                                        "properties": {
+                                            "avatar": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "href": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "uniqueName": {
+                                        "type": "string"
+                                    },
+                                    "imageUrl": {
+                                        "type": "string"
+                                    },
+                                    "descriptor": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "creationDate": {
+                                "type": "string"
+                            },
+                            "closedDate": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "sourceRefName": {
+                                "type": "string"
+                            },
+                            "targetRefName": {
+                                "type": "string"
+                            },
+                            "mergeStatus": {
+                                "type": "string"
+                            },
+                            "isDraft": {
+                                "type": "boolean"
+                            },
+                            "mergeId": {
+                                "type": "string"
+                            },
+                            "lastMergeSourceCommit": {
+                                "type": "object",
+                                "properties": {
+                                    "commitId": {
+                                        "type": "string"
+                                    },
+                                    "url": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "lastMergeTargetCommit": {
+                                "type": "object",
+                                "properties": {
+                                    "commitId": {
+                                        "type": "string"
+                                    },
+                                    "url": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "lastMergeCommit": {
+                                "type": "object",
+                                "properties": {
+                                    "commitId": {
+                                        "type": "string"
+                                    },
+                                    "url": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "reviewers": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "reviewerUrl": {
+                                            "type": "string"
+                                        },
+                                        "vote": {
+                                            "type": "number"
+                                        },
+                                        "hasDeclined": {
+                                            "type": "boolean"
+                                        },
+                                        "isFlagged": {
+                                            "type": "boolean"
+                                        },
+                                        "displayName": {
+                                            "type": "string"
+                                        },
+                                        "url": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "uniqueName": {
+                                            "type": "string"
+                                        },
+                                        "supportsIterations": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            },
+                            "url": {
+                                "type": "string"
+                            },
+                            "supportsIterations": {
+                                "type": "boolean"
+                            },
+                            "threads": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "number"
+                                        },
+                                        "publishedDate": {
+                                            "type": "string"
+                                        },
+                                        "lastUpdatedDate": {
+                                            "type": "string"
+                                        },
+                                        "comments": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "parentCommentId": {
+                                                        "type": "number"
+                                                    },
+                                                    "author": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "displayName": {
+                                                                "type": "string"
+                                                            },
+                                                            "url": {
+                                                                "type": "string"
+                                                            },
+                                                            "_links": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "avatar": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "href": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "uniqueName": {
+                                                                "type": "string"
+                                                            },
+                                                            "imageUrl": {
+                                                                "type": "string"
+                                                            },
+                                                            "descriptor": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "content": {
+                                                        "type": "string"
+                                                    },
+                                                    "publishedDate": {
+                                                        "type": "string"
+                                                    },
+                                                    "lastUpdatedDate": {
+                                                        "type": "string"
+                                                    },
+                                                    "lastContentUpdatedDate": {
+                                                        "type": "string"
+                                                    },
+                                                    "commentType": {
+                                                        "type": "string"
+                                                    },
+                                                    "usersLiked": {
+                                                        "type": "array",
+                                                        "items": {}
+                                                    },
+                                                    "_links": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "self": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "href": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "repository": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "href": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "threads": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "href": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "pullRequests": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "href": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "isDeleted": {
+                                            "type": "boolean"
+                                        },
+                                        "_links": {
+                                            "type": "object",
+                                            "properties": {
+                                                "self": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "repository": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "commits": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "commitId": {
+                                            "type": "string"
+                                        },
+                                        "author": {
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "date": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "committer": {
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "date": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "comment": {
+                                            "type": "string"
+                                        },
+                                        "url": {
+                                            "type": "string"
+                                        },
+                                        "changeCounts": {
+                                            "type": "object",
+                                            "properties": {
+                                                "Add": {
+                                                    "type": "number"
+                                                },
+                                                "Edit": {
+                                                    "type": "number"
+                                                },
+                                                "Delete": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "workItems": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "url": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "supportedSyncModes": [
+                        "full_refresh",
+                        "incremental"
+                    ],
+                    "sourceDefinedCursor": true,
+                    "defaultCursorField": [
+                        "closedDate"
+                    ],
+                    "sourceDefinedPrimaryKey": [
+                        [
+                            "pullRequestId"
+                        ]
+                    ]
+                }
+            },
+            {
+                "config": {
+                    "syncMode": "full_refresh",
+                    "cursorField": [],
+                    "destinationSyncMode": "overwrite",
+                    "primaryKey": [
+                        [
+                            "id"
+                        ]
+                    ],
+                    "aliasName": "repositories",
+                    "selected": true
+                },
+                "stream": {
+                    "name": "repositories",
+                    "jsonSchema": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "url": {
+                                "type": "string"
+                            },
+                            "project": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "url": {
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "type": "string"
+                                    },
+                                    "revision": {
+                                        "type": "number"
+                                    },
+                                    "visibility": {
+                                        "type": "string"
+                                    },
+                                    "lastUpdateTime": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "defaultBranch": {
+                                "type": "string"
+                            },
+                            "size": {
+                                "type": "number"
+                            },
+                            "remoteUrl": {
+                                "type": "string"
+                            },
+                            "sshUrl": {
+                                "type": "string"
+                            },
+                            "webUrl": {
+                                "type": "string"
+                            },
+                            "isDisabled": {
+                                "type": "boolean"
+                            },
+                            "branches": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "url": {
+                                            "type": "string"
+                                        },
+                                        "aheadCount": {
+                                            "type": "number"
+                                        },
+                                        "behindCount": {
+                                            "type": "number"
+                                        },
+                                        "isBaseVersion": {
+                                            "type": "boolean"
+                                        },
+                                        "commits": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "commitId": {
+                                                        "type": "string"
+                                                    },
+                                                    "comment": {
+                                                        "type": "string"
+                                                    },
+                                                    "url": {
+                                                        "type": "string"
+                                                    },
+                                                    "remoteUrl": {
+                                                        "type": "string"
+                                                    },
+                                                    "author": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "email": {
+                                                                "type": "string"
+                                                            },
+                                                            "date": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "committer": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "email": {
+                                                                "type": "string"
+                                                            },
+                                                            "date": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "changeCounts": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "Add": {
+                                                                "type": "number"
+                                                            },
+                                                            "Edit": {
+                                                                "type": "number"
+                                                            },
+                                                            "Delete": {
+                                                                "type": "number"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "objectId": {
+                                                "type": "string"
+                                            },
+                                            "creator": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "displayName": {
+                                                        "type": "string"
+                                                    },
+                                                    "url": {
+                                                        "type": "string"
+                                                    },
+                                                    "_links": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "avatar": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "href": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "uniqueName": {
+                                                        "type": "string"
+                                                    },
+                                                    "imageUrl": {
+                                                        "type": "string"
+                                                    },
+                                                    "descriptor": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "url": {
+                                                "type": "string"
+                                            },
+                                            "commit": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "objectId": {
+                                                        "type": "string"
+                                                    },
+                                                    "taggedObject": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "objectId": {
+                                                                "type": "string"
+                                                            },
+                                                            "objectType": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "taggedBy": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "email": {
+                                                                "type": "string"
+                                                            },
+                                                            "date": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "message": {
+                                                        "type": "string"
+                                                    },
+                                                    "url": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "supportedSyncModes": [
+                        "full_refresh"
+                    ],
+                    "defaultCursorField": [],
+                    "sourceDefinedPrimaryKey": [
+                        [
+                            "id"
+                        ]
+                    ]
+                }
+            },
+            {
+                "config": {
+                    "syncMode": "full_refresh",
+                    "cursorField": [],
+                    "destinationSyncMode": "overwrite",
+                    "primaryKey": [
+                        [
+                            "principalName"
+                        ]
+                    ],
+                    "aliasName": "users",
+                    "selected": true
+                },
+                "stream": {
+                    "name": "users",
+                    "jsonSchema": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "type": "object",
+                        "properties": {
+                            "subjectKind": {
+                                "type": "string"
+                            },
+                            "domain": {
+                                "type": "string"
+                            },
+                            "principalName": {
+                                "type": "string"
+                            },
+                            "mailAddress": {
+                                "type": "string"
+                            },
+                            "origin": {
+                                "type": "string"
+                            },
+                            "originId": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "displayName": {
+                                "type": "string"
+                            },
+                            "url": {
+                                "type": "string"
+                            },
+                            "descriptor": {
+                                "type": "string"
+                            },
+                            "_links": {
+                                "type": "object",
+                                "properties": {
+                                    "self": {
+                                        "type": "object",
+                                        "properties": {
+                                            "href": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "memberships": {
+                                        "type": "object",
+                                        "properties": {
+                                            "href": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "membershipState": {
+                                        "type": "object",
+                                        "properties": {
+                                            "href": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "storageKey": {
+                                        "type": "object",
+                                        "properties": {
+                                            "href": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "avatar": {
+                                        "type": "object",
+                                        "properties": {
+                                            "href": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "supportedSyncModes": [
+                        "full_refresh"
+                    ],
+                    "defaultCursorField": [],
+                    "sourceDefinedPrimaryKey": [
+                        [
+                            "principalName"
+                        ]
+                    ]
+                }
+            }
+        ]
+    },
+    "prefix": "azure_repos__",
+    "namespaceDefinition": "source",
+    "namespaceFormat": "${SOURCE_NAMESPACE}",
+    "scheduleType": "manual",
+    "name": "99xFlowyzerTestAzureRepoSource <> Faros Destination",
+    "operations": [],
+    "status": "active",
+    "sourceCatalogId": "3e2d13bd-edf9-4e18-a5eb-272cd2ae7654"
+}
