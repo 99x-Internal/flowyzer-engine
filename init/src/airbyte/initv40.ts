@@ -32,13 +32,35 @@ const SOURCES = path.join(
   'airbyte_config',
   'SOURCE_CONNECTION.yaml'
 );
- 
-const username = 'airbyte';
-const password = 'password';
- 
-// Encode the username and password to base64
-const basicAuth = 'Basic ' + Buffer.from(`${username}:${password}`).toString('base64');
- 
+
+const CREATE_CONNECTION_REPO = path.join(
+  BASE_RESOURCES_DIR,
+  'airbyte',
+  'workspace',
+  'create_connection',
+  'azureRepo.json'
+)
+
+const CREATE_CONNECTION_WORKITEMS = path.join(
+  BASE_RESOURCES_DIR,
+  'airbyte',
+  'workspace',
+  'create_connection',
+  'workItems.json'
+)
+
+let workItemsDefId: string;
+let workItemsSourceId: string;
+let workItemsCatalog: string;
+
+let azureReposDefId: string;
+let azureReposSourceId: string;
+let azureRepoCatalog: string;
+
+let destinationDefId: string;
+let destinationId: string;
+
+
 // Function to load and parse a YAML file
 function loadYamlFile(filePath: string): any {
   try {
@@ -369,12 +391,7 @@ export class AirbyteInitV40 {
                 dockerImageTag: "0.2.02-candidate",
                 dockerRepository: "bksdrodrigo/azure-workitems-source-99x"
             }
-        }, {
-            headers: {
-                'Authorization': basicAuth,
-                'Content-Type': 'application/json'
-            }
-        });
+        }, );
         console.log('Response:', response.data);
         return response.data.sourceDefinitionId;
     } catch (error) {
@@ -395,12 +412,7 @@ export class AirbyteInitV40 {
               dockerImageTag: "0.2.02-candidate",
               dockerRepository: "bksdrodrigo/azure-repos-source-99x"
             }
-          }, {
-            headers: {
-                'Authorization': basicAuth,
-                'Content-Type': 'application/json'
-            }
-        });
+          },);
         console.log('Response:', response.data);
         return response.data.sourceDefinitionId;
     } catch (error) {
@@ -419,13 +431,9 @@ export class AirbyteInitV40 {
             dockerImageTag: "0.2.02-candidate",
             dockerRepository: "bksdrodrigo/airbyte-faros-destination-99x"
           }
-        }, {
-            headers: {
-                'Authorization': basicAuth,
-                'Content-Type': 'application/json'
-            }
-        });
+        }, );
         console.log('Response:', response.data);
+        destinationDefId = response.data.destinationDefinitionId;
         return response.data.destinationDefinitionId;
     } catch (error) {
         console.error('Error:', error);
@@ -435,12 +443,7 @@ export class AirbyteInitV40 {
  
   async checkConnectorsExist(workspaceId: string) {
     try {
-        const response = await this.api.post('/source_definitions/list', {}, {
-            headers: {
-                'Authorization': basicAuth,
-                'Content-Type': 'application/json'
-            }
-        });
+        const response = await this.api.post('/source_definitions/list', {},);
  
         // console.log('Response:', response.data);
  
@@ -456,14 +459,14 @@ export class AirbyteInitV40 {
           console.log('One or both of the sources do not exist. Creating them...');
       
           // Adding work items connector and handling the result
-          const workItemsDefId = await this.addWorkItemsConnector(workspaceId);
-          const workItemsSourceId = await this.createSourceWorkItems(workspaceId, workItemsDefId);
-          const workItemsCatalog = await this.discoverSchemaCatalog(workItemsSourceId);
+          workItemsDefId = await this.addWorkItemsConnector(workspaceId);
+          workItemsSourceId = await this.createSourceWorkItems(workspaceId, workItemsDefId);
+          workItemsCatalog = await this.discoverSchemaCatalog(workItemsSourceId);
       
           // Adding Azure repos connector and handling the result
-          const azureReposDefId = await this.addAzureReposConnector(workspaceId);
-          const azureReposSourceId = await this.createSourceAzureRepo(workspaceId, azureReposDefId);
-          const azureRepoCatalog = await this.discoverSchemaCatalog(azureReposSourceId);
+          azureReposDefId = await this.addAzureReposConnector(workspaceId);
+          azureReposSourceId = await this.createSourceAzureRepo(workspaceId, azureReposDefId);
+          azureRepoCatalog = await this.discoverSchemaCatalog(azureReposSourceId);
       
       } else {
           console.log('Both sources exist.');
@@ -629,14 +632,10 @@ export class AirbyteInitV40 {
                 accept_input_records_origin: true                
           }
         }
-      }, {
-          headers: {
-              'Authorization': basicAuth,
-              'Content-Type': 'application/json'
-          }
-      });
+      }, );
  
       console.log('Response:', response.data.destinationId);
+      destinationId = response.data.destinationId;
       return response.data.destinationId;
   } catch (error) {
       console.error('Error:', error);
@@ -646,12 +645,7 @@ export class AirbyteInitV40 {
 
   async checkDestinationExist(workspaceId: string) {
     try {
-        const response = await this.api.post('/destination_definitions/list', {}, {
-            headers: {
-                'Authorization': basicAuth,
-                'Content-Type': 'application/json'
-            }
-        });
+        const response = await this.api.post('/destination_definitions/list', {}, );
  
         // console.log('Response:', response.data);
  
@@ -678,12 +672,7 @@ export class AirbyteInitV40 {
  
   async getWorkspace(): Promise<string> {
     try {
-        const response = await this.api.post('/workspaces/list', {}, {
-            headers: {
-                'Authorization': basicAuth,
-                'Content-Type': 'application/json'
-            }
-        });
+        const response = await this.api.post('/workspaces/list', {}, );
  
         console.log('Response:', response.data);
  
@@ -716,12 +705,7 @@ export class AirbyteInitV40 {
               access_token: `${process.env.AZURE_DEVOPS_PAT}`,
               projects: ["BUS"]
           }
-      }, {
-          headers: {
-              'Authorization': basicAuth,
-              'Content-Type': 'application/json'
-          }
-      });
+      },);
  
       console.log('Response:', response.data.sourceId);
       return response.data.sourceId;
@@ -749,12 +733,7 @@ export class AirbyteInitV40 {
                 "BUS"
             ]
           }
-      }, {
-          headers: {
-              'Authorization': basicAuth,
-              'Content-Type': 'application/json'
-          }
-      });
+      }, );
  
       console.log('Response:', response.data.sourceId);
       return response.data.sourceId;
@@ -768,12 +747,7 @@ export class AirbyteInitV40 {
     try {
       const response = await this.api.post('/sources/discover_schema', {
           sourceId: `${sourceId}`
-      }, {
-          headers: {
-              'Authorization': basicAuth,
-              'Content-Type': 'application/json'
-          }
-      });
+      }, );
  
       console.log('CatalogId:', response.data.catalogId);
       return response.data.catalogId;
@@ -783,37 +757,55 @@ export class AirbyteInitV40 {
   }
   }
  
-  // async createConnectionAzureRepo(workspaceId: string, sourceDefId: string): Promise<string> {
-  //   try {
-  //     const response = await this.api.post('/sources/create', {
-  //         name: "Flowyzer-AzureRepoWorkitem-BUS",
-  //         sourceDefinitionId: `${sourceDefId}`,
-  //         workspaceId: `${workspaceId}`,
-  //         connectionConfiguration: {
-  //           api_version: "7.1",
-  //           cutoff_days: 90,
-  //           graph_version: "7.1-preview.1",
-  //           request_timeout: 60000,
-  //           organization: "BUS-AS-Norway",
-  //           access_token: `${process.env.AZURE_DEVOPS_PAT}`,
-  //           projects: [
-  //               "BUS"
-  //           ]
-  //         }
-  //     }, {
-  //         headers: {
-  //             'Authorization': basicAuth,
-  //             'Content-Type': 'application/json'
-  //         }
-  //     });
- 
-  //     console.log('Response:', response.data.sourceId);
-  //     return response.data.sourceId;
-  // } catch (error) {
-  //     console.error('Error:', error);
-  //     throw error;
-  // }
-  // }
+  async createConnectionAzureRepo(
+    sourceDefId: string,
+    destinationId: string,
+    sourceCatalogId: string
+  ): Promise<string> {
+    try {
+      const fileContent = fs.readFileSync(CREATE_CONNECTION_REPO, 'utf-8');
+      const data = JSON.parse(fileContent);
+  
+      // Update the sourceId, destinationId, and sourceCatalogId with the provided parameters
+      data.sourceId = sourceDefId;
+      data.destinationId = destinationId;
+      data.sourceCatalogId = sourceCatalogId;
+  
+      // Make the API call to create the connection (assuming the data is to be sent in the request)
+      const response = await this.api.post('/web_backend/connections/create', data);
+  
+      console.log('Response:', response.data.connectionId);
+      return response.data.connectionId as string;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+  
+  async createConnectionWorkItems(
+    sourceDefId: string,
+    destinationId: string,
+    sourceCatalogId: string
+  ): Promise<string> {
+    try {
+      const fileContent = fs.readFileSync(CREATE_CONNECTION_WORKITEMS, 'utf-8');
+      const data = JSON.parse(fileContent);
+  
+      // Update the sourceId, destinationId, and sourceCatalogId with the provided parameters
+      data.sourceId = sourceDefId;
+      data.destinationId = destinationId;
+      data.sourceCatalogId = sourceCatalogId;
+  
+      // Make the API call to create the connection (assuming the data is to be sent in the request)
+      const response = await this.api.post('/web_backend/connections/create', data);
+  
+      console.log('Response:', response.data.connectionId);
+      return response.data.connectionId as string;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
 
  
   async init(
@@ -828,7 +820,9 @@ export class AirbyteInitV40 {
     console.log('This is workspace id ', workspaceId)
     await this.checkConnectorsExist(workspaceId);
     await this.checkDestinationExist(workspaceId);
- 
+    await this.createConnectionAzureRepo(azureReposSourceId, destinationId, azureRepoCatalog)
+    await this.createConnectionWorkItems(workItemsSourceId, destinationId, workItemsCatalog)
+
     // const workspaceId = await this.getFirstWorkspace();
     logger.info('workspaceId: ' + workspaceId);
     await this.completeFarosWorkspaceSetup(workspaceId);
