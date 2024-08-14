@@ -409,7 +409,7 @@ export class AirbyteInitV40 {
     }
   }
  
-  async createFlowyzerDestination(workspaceId: string) {
+  async addDestinationConnector(workspaceId: string) {
     try {
         const response = await this.api.post('/destination_definitions/create_custom', {
           workspaceId: `${workspaceId}`,
@@ -426,7 +426,7 @@ export class AirbyteInitV40 {
             }
         });
         console.log('Response:', response.data);
-        return response.data;
+        return response.data.destinationDefinitionId;
     } catch (error) {
         console.error('Error:', error);
         throw error;
@@ -453,16 +453,21 @@ export class AirbyteInitV40 {
  
         // If either source doesn't exist, run the createWorkitems function
         if (!azureReposExists || !azureWorkitemsExists) {
-            console.log('One or both of the sources do not exist. Creating them...');
-            await this.addWorkItemsConnector(workspaceId).then((workItemsDefId) => {
-              return this.createSourceWorkItems(workspaceId, workItemsDefId);
-            });
-            await this.addAzureReposConnector(workspaceId).then((azureReposDefId) => {
-              return this.createSourceAzureRepo(workspaceId, azureReposDefId);
-            });
-        } else {
-            console.log('Both sources exist.');
-        }
+          console.log('One or both of the sources do not exist. Creating them...');
+      
+          // Adding work items connector and handling the result
+          const workItemsDefId = await this.addWorkItemsConnector(workspaceId);
+          const workItemsSourceId = await this.createSourceWorkItems(workspaceId, workItemsDefId);
+          const workItemsCatalog = await this.discoverSchemaCatalog(workItemsSourceId);
+      
+          // Adding Azure repos connector and handling the result
+          const azureReposDefId = await this.addAzureReposConnector(workspaceId);
+          const azureReposSourceId = await this.createSourceAzureRepo(workspaceId, azureReposDefId);
+          const azureRepoCatalog = await this.discoverSchemaCatalog(azureReposSourceId);
+      
+      } else {
+          console.log('Both sources exist.');
+      }
  
         return response.data;
     } catch (error) {
@@ -471,6 +476,174 @@ export class AirbyteInitV40 {
     }
   }
  
+  async createFlowyzerDestination(workspaceId: string, definitionId: string){
+    try {
+      const response = await this.api.post('/destinations/create', {
+          name: "99x-Flowyzer-Destination",
+          destinationDefinitionId: `${definitionId}`,
+          workspaceId: `${workspaceId}`,
+          connectionConfiguration: {
+              edition_configs: {
+                  edition: "community",
+                  hasura_url: "http://127.0.0.1:8081",
+                  community_graphql_batch_size: 100,
+                  segment_user_id: "00000000-0000-0000-0000-000000000000",
+                  hasura_admin_secret: "admin"
+              },
+              source_specific_configs: {
+                  jira: {
+                      source_type: "Jira",
+                      exclude_fields: [],
+                      truncate_limit: 10000,
+                      use_board_ownership: false,
+                      additional_fields_array_limit: 50
+                  },
+                  asana: {
+                      source_type: "Asana"
+                  },
+                  docker: {
+                      source_type: "Docker",
+                      organization: "nextjs-org",
+                      label_prefix: "nextjs"
+                  },
+                  notion: {
+                      source_type: "Notion_None"
+                  },
+                  backlog: {
+                      source_type: "Backlog",
+                      max_description_length: 1000
+                  },
+                  clickup: {
+                      source_type: "ClickUp",
+                      truncate_limit: 10000,
+                      taskboard_source: "space"
+                  },
+                  datadog: {
+                      source_type: "Datadog",
+                      application_mapping: "{}"
+                  },
+                  jenkins: {
+                      source_type: "Jenkins",
+                      create_commit_records: false
+                  },
+                  octopus: {
+                      source_type: "Octopus",
+                      vcs_source: "GitHub"
+                  },
+                  surveys: {
+                    source_type: "Surveys",
+                    exclude_columns: [],
+                    column_names_mapping: {
+                        question_column_name: "Question",
+                        survey_name_column_name: "Survey Name",
+                        survey_type_column_name: "Survey Type",
+                        response_type_column_name: "Response Type",
+                        survey_status_column_name: "Survey Status",
+                        respondent_name_column_name: "Name",
+                        survey_ended_at_column_name: "Survey Ended At",
+                        respondent_email_column_name: "Email",
+                        question_category_column_name: "Category",
+                        survey_started_at_column_name: "Survey Started At",
+                        respondent_team_id_column_name: "Team ID",
+                        survey_description_column_name: "Survey Description",
+                        respondent_team_name_column_name: "Team Name",
+                        response_submitted_at_column_name: "Timestamp"
+                    },
+                    question_category_mapping: "{}",
+                    survey_metadata_table_name: "Survey Metadata",
+                    survey_responses_table_name: "Survey Responses",
+                    question_metadata_table_name: "Question Metadata"
+                },
+                workday: {
+                    source_type: "Workday",
+                    orgs_to_keep: [],
+                    orgs_to_ignore: []
+                },
+                bamboohr: {
+                    source_type: "BambooHR",
+                    bootstrap_teams_from_managers: false
+                },
+                circleci: {
+                    source_type: "CircleCI",
+                    skip_writing_test_cases: true
+                },
+                opsgenie: {
+                    source_type: "OpsGenie",
+                    application_mapping: "{}",
+                    max_description_length: 1000
+                },
+                bitbucket: {
+                    source_type: "Bitbucket",
+                    application_mapping: "{}"
+                },
+                pagerduty: {
+                    source_type: "PagerDuty",
+                    application_mapping: "{}",
+                    associate_applications_to_teams: false
+                },
+                squadcast: {
+                    source_type: "SquadCast",
+                    application_mapping: "{}"
+                },
+                victorops: {
+                    source_type: "VictorOps",
+                    application_field: "service",
+                    application_mapping: "{}"
+                },
+                servicenow: {
+                    source_type: "ServiceNow",
+                    application_field: "business_service",
+                    application_mapping: "{}",
+                    store_current_incidents_associations: false
+                },
+                statuspage: {
+                    source_type: "Statuspage",
+                    application_mapping: "{}"
+                },
+                firehydrant: {
+                    source_type: "FireHydrant",
+                    application_mapping: "{}",
+                    max_description_length: 1000
+                },
+                phabricator: {
+                    source_type: "Phabricator",
+                    max_description_length: 1000
+                },
+                option_title: "Source-specific configs",
+                azurepipeline: {
+                    source_type: "Azure pipeline",
+                    application_mapping: "{}"
+                },
+                agileaccelerator: {
+                    source_type: "AgileAccelerator",
+                    max_description_length: 1000,
+                    work_additional_fields: []
+                },
+                dry_run: false,
+                keep_alive: false,
+                jsonata_mode: "FALLBACK",
+                exclude_fields_map: "{}",
+                replace_origin_map: "{}",
+                invalid_record_strategy: "SKIP",
+                skip_source_success_check: false,
+                accept_input_records_origin: true                
+          }
+        }
+      }, {
+          headers: {
+              'Authorization': basicAuth,
+              'Content-Type': 'application/json'
+          }
+      });
+ 
+      console.log('Response:', response.data.destinationId);
+      return response.data.destinationId;
+  } catch (error) {
+      console.error('Error:', error);
+      throw error;
+  }
+  }
+
   async checkDestinationExist(workspaceId: string) {
     try {
         const response = await this.api.post('/destination_definitions/list', {}, {
@@ -489,7 +662,9 @@ export class AirbyteInitV40 {
  
         if (!farosDestination) {
             console.log('Destination doesnt exist. Creating them...');
-            await this.createFlowyzerDestination(workspaceId);
+            await this.addDestinationConnector(workspaceId).then((destinationDefinitionId) => {
+              return this.createFlowyzerDestination(workspaceId, destinationDefinitionId)
+            } );
         } else {
             console.log('Destination exists.');
         }
@@ -588,7 +763,58 @@ export class AirbyteInitV40 {
       throw error;
   }
   }
+
+  async discoverSchemaCatalog(sourceId: string){
+    try {
+      const response = await this.api.post('/sources/discover_schema', {
+          sourceId: `${sourceId}`
+      }, {
+          headers: {
+              'Authorization': basicAuth,
+              'Content-Type': 'application/json'
+          }
+      });
  
+      console.log('CatalogId:', response.data.catalogId);
+      return response.data.catalogId;
+  } catch (error) {
+      console.error('Error:', error);
+      throw error;
+  }
+  }
+ 
+  // async createConnectionAzureRepo(workspaceId: string, sourceDefId: string): Promise<string> {
+  //   try {
+  //     const response = await this.api.post('/sources/create', {
+  //         name: "Flowyzer-AzureRepoWorkitem-BUS",
+  //         sourceDefinitionId: `${sourceDefId}`,
+  //         workspaceId: `${workspaceId}`,
+  //         connectionConfiguration: {
+  //           api_version: "7.1",
+  //           cutoff_days: 90,
+  //           graph_version: "7.1-preview.1",
+  //           request_timeout: 60000,
+  //           organization: "BUS-AS-Norway",
+  //           access_token: `${process.env.AZURE_DEVOPS_PAT}`,
+  //           projects: [
+  //               "BUS"
+  //           ]
+  //         }
+  //     }, {
+  //         headers: {
+  //             'Authorization': basicAuth,
+  //             'Content-Type': 'application/json'
+  //         }
+  //     });
+ 
+  //     console.log('Response:', response.data.sourceId);
+  //     return response.data.sourceId;
+  // } catch (error) {
+  //     console.error('Error:', error);
+  //     throw error;
+  // }
+  // }
+
  
   async init(
     farosConnectorsVersion: string,
