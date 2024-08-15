@@ -381,46 +381,6 @@ export class AirbyteInitV40 {
     logger.info('connectionId for ' + name + ': ' + connectionId);
   }
  
-  async addWorkItemsConnector(workspaceId: string) {
-    try {
-        const response = await this.api.post('/source_definitions/create_custom', {
-            workspaceId: `${workspaceId}`,
-            sourceDefinition: {
-                name: "azure-workitems-source-99x",
-                documentationUrl: "",
-                dockerImageTag: "0.2.02-candidate",
-                dockerRepository: "bksdrodrigo/azure-workitems-source-99x"
-            }
-        }, );
-        console.log('Response:', response.data);
-        return response.data.sourceDefinitionId;
-    } catch (error) {
-        console.error('Error:', error);
-        // You can return an error value or rethrow the error depending on your needs
-        throw error;
-    }
-  }
- 
- 
-  async addAzureReposConnector(workspaceId: string) {
-    try {
-        const response = await this.api.post('/source_definitions/create_custom', {
-            workspaceId: `${workspaceId}`,
-            sourceDefinition: {
-              name: "azure-repos-source-99x",
-              documentationUrl: "",
-              dockerImageTag: "0.2.02-candidate",
-              dockerRepository: "bksdrodrigo/azure-repos-source-99x"
-            }
-          },);
-        console.log('Response:', response.data);
-        return response.data.sourceDefinitionId;
-    } catch (error) {
-        console.error('Error:', error);
-        throw error;
-    }
-  }
- 
   async addDestinationConnector(workspaceId: string) {
     try {
         const response = await this.api.post('/destination_definitions/create_custom', {
@@ -451,26 +411,50 @@ export class AirbyteInitV40 {
         const sourceDefinitions = response.data.sourceDefinitions;
  
         // Check if the desired sources exist
-        const azureReposExists = sourceDefinitions.some((source: { name: string; }) => source.name === 'azure-repos-source-99x');
         const azureWorkitemsExists = sourceDefinitions.some((source: { name: string; }) => source.name === 'azure-workitems-source-99x');
+
+        const azureReposExists = sourceDefinitions.some((source: { name: string; }) => source.name === 'azure-repos-source-99x');
  
         // If either source doesn't exist, run the createWorkitems function
-        if (!azureReposExists || !azureWorkitemsExists) {
+        if (!azureWorkitemsExists) {
           console.log('One or both of the sources do not exist. Creating them...');
-      
+
+          const sourceDefinition = {
+            name: "azure-workitems-source-99x",
+            dockerRepository: "bksdrodrigo/azure-workitems-source-99x",
+            dockerImageTag: "0.2.02-candidate",
+            documentationUrl: ""
+          }
+
           // Adding work items connector and handling the result
-          workItemsDefId = await this.addWorkItemsConnector(workspaceId);
+          workItemsDefId = await this.createCustomSourceDefinition({
+            workspaceId,
+            sourceDefinition
+          });
           workItemsSourceId = await this.createSourceWorkItems(workspaceId, workItemsDefId);
           workItemsCatalog = await this.discoverSchemaCatalog(workItemsSourceId);
-      
-          // Adding Azure repos connector and handling the result
-          azureReposDefId = await this.addAzureReposConnector(workspaceId);
-          azureReposSourceId = await this.createSourceAzureRepo(workspaceId, azureReposDefId);
-          azureRepoCatalog = await this.discoverSchemaCatalog(azureReposSourceId);
       
       } else {
           console.log('Both sources exist.');
       }
+
+        if (!azureReposExists){
+          console.log('Adding repos-source connector');
+          const sourceDefinition = {
+            name: "azure-repos-source-99x",
+            dockerRepository: "bksdrodrigo/azure-repos-source-99x",
+            dockerImageTag: "0.2.02-candidate",
+            documentationUrl: ""
+          }
+
+          // Adding Azure repos connector and handling the result
+          azureReposDefId = await this.createCustomSourceDefinition({
+            workspaceId,
+            sourceDefinition
+          });
+          azureReposSourceId = await this.createSourceAzureRepo(workspaceId, azureReposDefId);
+          azureRepoCatalog = await this.discoverSchemaCatalog(azureReposSourceId);
+        }
  
         return response.data;
     } catch (error) {
