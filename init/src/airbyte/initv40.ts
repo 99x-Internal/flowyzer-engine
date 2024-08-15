@@ -407,10 +407,8 @@ export class AirbyteInitV40 {
  
         // console.log('Response:', response.data);
  
-        // Extract the source definitions from the response
         const sourceDefinitions = response.data.sourceDefinitions;
  
-        // Check if the desired sources exist
         const azureWorkitemsExists = sourceDefinitions.some((source: { name: string; }) => source.name === 'azure-workitems-source-99x');
 
         const azureReposExists = sourceDefinitions.some((source: { name: string; }) => source.name === 'azure-repos-source-99x');
@@ -633,7 +631,6 @@ export class AirbyteInitV40 {
  
         // console.log('Response:', response.data);
  
-        // Extract the source definitions from the response
         const destinationDefinitions = response.data.destinationDefinitions;
  
         const farosDestination = destinationDefinitions.some((destination: { name: string; }) => destination.name === 'airbyte-faros-destination-99x');
@@ -775,12 +772,10 @@ export class AirbyteInitV40 {
       const fileContent = fs.readFileSync(CREATE_CONNECTION_WORKITEMS, 'utf-8');
       const data = JSON.parse(fileContent);
   
-      // Update the sourceId, destinationId, and sourceCatalogId with the provided parameters
       data.sourceId = sourceDefId;
       data.destinationId = destinationId;
       data.sourceCatalogId = sourceCatalogId;
   
-      // Make the API call to create the connection (assuming the data is to be sent in the request)
       const response = await this.api.post('/web_backend/connections/create', data);
   
       console.log('Response:', response.data.connectionId);
