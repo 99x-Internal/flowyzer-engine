@@ -388,27 +388,7 @@ export class AirbyteInitV40 {
     );
     logger.info('connectionId for ' + name + ': ' + connectionId);
   }
- 
-  async addDestinationConnector(workspaceId: string) {
-    try {
-        const response = await this.api.post('/destination_definitions/create_custom', {
-          workspaceId: `${workspaceId}`,
-          destinationDefinition: {
-            name: "airbyte-faros-destination-99x",
-            documentationUrl: "",
-            dockerImageTag: "0.2.02-candidate",
-            dockerRepository: "bksdrodrigo/airbyte-faros-destination-99x"
-          }
-        }, );
-        console.log('Response:', response.data);
-        destinationDefId = response.data.destinationDefinitionId;
-        return response.data.destinationDefinitionId;
-    } catch (error) {
-        console.error('Error:', error);
-        throw error;
-    }
-  }
- 
+
   async checkConnectorsExist(workspaceId: string) {
     try {
         const response = await this.api.post('/source_definitions/list', {},);
@@ -536,9 +516,16 @@ export class AirbyteInitV40 {
  
         if (!farosDestination) {
             console.log('Destination doesnt exist. Creating them...');
-            await this.addDestinationConnector(workspaceId).then((destinationDefinitionId) => {
-              return this.createFlowyzerDestination(workspaceId, destinationDefinitionId)
-            } );
+            destinationDefId =  await this.createCustomDestinationDefinition({
+              workspaceId: workspaceId,
+              destinationDefinition: {
+                  name: "airbyte-faros-destination-99x",
+                  dockerRepository: "bksdrodrigo/airbyte-faros-destination-99x",
+                  dockerImageTag: "0.2.02-candidate",
+                  documentationUrl: "",
+              }
+            })
+            await this.createFlowyzerDestination(workspaceId, destinationDefId)
         } else {
             console.log('Destination exists.');
         }
