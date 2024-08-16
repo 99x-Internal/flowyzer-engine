@@ -43,7 +43,7 @@ services:
       test: ["CMD", "psql", "-d", "postgres://${FLOWYZER_CONFIG_DB_USER?}:${FLOWYZER_CONFIG_DB_PASSWORD?}@${FLOWYZER_CONFIG_DB_HOST?}:${FLOWYZER_CONFIG_DB_PORT?}/${HASURA_DB_NAME?}", "-c", "SELECT 1"]
       interval: 5s
       timeout: 2s
-      start_period: 10s
+      start_period: 30s
       retries: 5
     networks:
         - airbyte_internal
