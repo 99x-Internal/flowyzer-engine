@@ -403,7 +403,7 @@ export class AirbyteInitV40 {
  
         // If either source doesn't exist, run the createWorkitems function
         if (!azureWorkitemsExists) {
-          console.log('One or both of the sources do not exist. Creating them...');
+          console.log('WorkItems Connector doesnt exist. Adding source connector...');
 
           const sourceDefinition = {
             name: "azure-workitems-source-99x",
@@ -417,13 +417,15 @@ export class AirbyteInitV40 {
             workspaceId,
             sourceDefinition
           });
+
+          console.log('WorkItems Connector Definition ID', workItemsDefId)
       
       } else {
           console.log('Both sources exist.');
       }
 
         if (!azureReposExists){
-          console.log('Adding repos-source connector');
+          console.log('WorkItems Connector doesnt exist. Adding source connector...');
           const sourceDefinition = {
             name: "azure-repos-source-99x",
             dockerRepository: "bksdrodrigo/azure-repos-source-99x",
@@ -437,7 +439,8 @@ export class AirbyteInitV40 {
             sourceDefinition
           });
         }
- 
+        
+        console.log('Azure Repos Definition ID', azureReposDefId)
         return response.data;
     } catch (error) {
         console.error('Error:', error);
@@ -456,7 +459,7 @@ export class AirbyteInitV40 {
         const farosDestination = destinationDefinitions.some((destination: { name: string; }) => destination.name === 'airbyte-faros-destination-99x');
  
         if (!farosDestination) {
-            console.log('Destination doesnt exist. Creating them...');
+            console.log('Destination doesnt exist. Adding destination connector...');
             destinationDefId =  await this.createCustomDestinationDefinition({
               workspaceId: workspaceId,
               destinationDefinition: {
@@ -466,6 +469,7 @@ export class AirbyteInitV40 {
                   documentationUrl: "",
               }
             })
+            console.log('Destination Definition ID', destinationDefId)
         } else {
             console.log('Destination exists.');
         }
