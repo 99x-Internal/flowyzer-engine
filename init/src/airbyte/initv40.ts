@@ -417,23 +417,6 @@ export class AirbyteInitV40 {
             workspaceId,
             sourceDefinition
           });
-          workItemsSourceId = await this.createSource({
-            name: "Flowyzer-AzureRepoWorkitem-BUS",
-            sourceDefinitionId: `${workItemsDefId}`,
-            workspaceId: `${workspaceId}`,
-            connectionConfiguration: {
-              api_version: "7.1",
-              cutoff_days: 90,
-              graph_version: "7.1-preview.1",
-              request_timeout: 60000,
-              organization: "BUS-AS-Norway",
-              access_token: `${process.env.AZURE_DEVOPS_PAT}`,
-              projects: [
-                  "BUS"
-              ]
-          }
-        });
-          workItemsCatalog = await this.discoverSchemaCatalog(workItemsSourceId);
       
       } else {
           console.log('Both sources exist.');
@@ -453,28 +436,6 @@ export class AirbyteInitV40 {
             workspaceId,
             sourceDefinition
           });
-          azureReposSourceId = await this.createSource({
-          name: "Flowyzer-AzureRepoSource-BUS",
-          sourceDefinitionId: `${azureReposDefId}`,
-          workspaceId: `${workspaceId}`,
-          connectionConfiguration: {
-              api_url: "https://dev.azure.com",
-              page_size: 100,
-              api_version: "7.0",
-              cutoff_days: 90,
-              max_retries: 3,
-              graph_api_url: "https://vssps.dev.azure.com",
-              graph_version: "7.1-preview.1",
-              branch_pattern: ".*",
-              request_timeout: 60000,
-              reject_unauthorized: false,
-              organization: "BUS-AS-Norway",
-              access_token: `${process.env.AZURE_DEVOPS_PAT}`,
-              projects: ["BUS"]
-          }
-          }
-          );
-          azureRepoCatalog = await this.discoverSchemaCatalog(azureReposSourceId);
         }
  
         return response.data;
@@ -484,26 +445,6 @@ export class AirbyteInitV40 {
     }
   }
  
-  async createFlowyzerDestination(workspaceId: string, definitionId: string){
-    try {
-
-      const fileContent = fs.readFileSync(CREATE_DESTINATION_CONFIG, 'utf-8');
-      const data = JSON.parse(fileContent);
-  
-      data.workspaceId = workspaceId;
-      data.destinationDefinitionId = destinationDefId;  
-
-      const response = await this.api.post('/destinations/create', data);
- 
-      console.log('Response:', response.data.destinationId);
-      destinationId = response.data.destinationId;
-      return response.data.destinationId;
-  } catch (error) {
-      console.error('Error:', error);
-      throw error;
-  }
-  }
-
   async checkDestinationExist(workspaceId: string) {
     try {
         const response = await this.api.post('/destination_definitions/list', {}, );
@@ -525,7 +466,6 @@ export class AirbyteInitV40 {
                   documentationUrl: "",
               }
             })
-            await this.createFlowyzerDestination(workspaceId, destinationDefId)
         } else {
             console.log('Destination exists.');
         }
@@ -565,53 +505,6 @@ export class AirbyteInitV40 {
   }
   }
  
-  async createConnectionAzureRepo(
-    sourceDefId: string,
-    destinationId: string,
-    sourceCatalogId: string
-  ): Promise<string> {
-    try {
-      const fileContent = fs.readFileSync(CREATE_CONNECTION_REPO, 'utf-8');
-      const data = JSON.parse(fileContent);
-  
-      // Update the sourceId, destinationId, and sourceCatalogId with the provided parameters
-      data.sourceId = sourceDefId;
-      data.destinationId = destinationId;
-      data.sourceCatalogId = sourceCatalogId;
-  
-      // Make the API call to create the connection (assuming the data is to be sent in the request)
-      const response = await this.api.post('/web_backend/connections/create', data);
-  
-      console.log('Response:', response.data.connectionId);
-      return response.data.connectionId as string;
-    } catch (error) {
-      console.error('Error:', error);
-      throw error;
-    }
-  }
-  
-  async createConnectionWorkItems(
-    sourceDefId: string,
-    destinationId: string,
-    sourceCatalogId: string
-  ): Promise<string> {
-    try {
-      const fileContent = fs.readFileSync(CREATE_CONNECTION_WORKITEMS, 'utf-8');
-      const data = JSON.parse(fileContent);
-  
-      data.sourceId = sourceDefId;
-      data.destinationId = destinationId;
-      data.sourceCatalogId = sourceCatalogId;
-  
-      const response = await this.api.post('/web_backend/connections/create', data);
-  
-      console.log('Response:', response.data.connectionId);
-      return response.data.connectionId as string;
-    } catch (error) {
-      console.error('Error:', error);
-      throw error;
-    }
-  }
 
  
   async init(
@@ -626,8 +519,6 @@ export class AirbyteInitV40 {
     console.log('This is workspace id ', workspaceId)
     await this.checkConnectorsExist(workspaceId);
     await this.checkDestinationExist(workspaceId);
-    await this.createConnectionAzureRepo(azureReposSourceId, destinationId, azureRepoCatalog)
-    await this.createConnectionWorkItems(workItemsSourceId, destinationId, workItemsCatalog)
 
     // const workspaceId = await this.getFirstWorkspace();
     logger.info('workspaceId: ' + workspaceId);
