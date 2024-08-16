@@ -132,11 +132,7 @@ export class AirbyteInit {
     try {
       // destination spec expects uuid for segment_user_id
       // empty string fails validation
-      await airbyteInitV40.init(
-        airbyteDestinationHasuraUrl,
-        hasuraAdminSecret,
-        segmentUser?.userId ?? '00000000-0000-0000-0000-000000000000'
-      );
+      await airbyteInitV40.init();
     } catch (error) {
       throw new VError(`Failed to set up workspace: ${error}`);
     }
