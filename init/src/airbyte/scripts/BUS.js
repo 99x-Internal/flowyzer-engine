@@ -40,7 +40,9 @@ let azureRepoCatalog;
 
 let destinationDefId = "5b52c998-f0cc-4f9f-a38f-e9f542db5c88";
 let destinationId;
-let workspaceId = "ae8b4894-5a48-49e4-8d67-7179107e164e"
+let workspaceId = "ae8b4894-5a48-49e4-8d67-7179107e164e";
+const organization = "BUS-AS-Norway";
+const project="BUS";
 
 
 async function createSourceAzureRepo(workspaceId, sourceDefId){
@@ -60,9 +62,9 @@ async function createSourceAzureRepo(workspaceId, sourceDefId){
                 branch_pattern: ".*",
                 request_timeout: 60000,
                 reject_unauthorized: false,
-                organization: "BUS-AS-Norway",
+                organization: `${organization}`,
                 access_token: `${process.env.AZURE_DEVOPS_PAT}`,
-                projects: ["BUS"]
+                projects: [`${project}`]
             }
         }, {
             headers: {
@@ -71,7 +73,7 @@ async function createSourceAzureRepo(workspaceId, sourceDefId){
             }
         });
 
-        console.log('Response:', response.data.sourceId);
+        console.log('Azure Repo Source ID:', response.data.sourceId);
         return response.data.sourceId;
     } catch (error) {
         console.error('Error:', error);
@@ -91,10 +93,10 @@ async function createSourceWorkItems(workspaceId, sourceDefId) {
             cutoff_days: 90,
             graph_version: "7.1-preview.1",
             request_timeout: 60000,
-            organization: "BUS-AS-Norway",
+            organization: `${organization}`,
             access_token: `${process.env.AZURE_DEVOPS_PAT}`,
             projects: [
-                "BUS"
+                `${project}`
             ]
             }
         }, {
@@ -104,7 +106,7 @@ async function createSourceWorkItems(workspaceId, sourceDefId) {
             }
         });
 
-        console.log('Response:', response.data.sourceId);
+        console.log('Azure Workitems Source ID: ', response.data.sourceId);
         return response.data.sourceId;
     } catch (error) {
         console.error('Error:', error);
@@ -123,7 +125,7 @@ async function discoverSchemaCatalog(sourceId){
             }
         });
 
-        console.log('CatalogId:', response.data.catalogId);
+        console.log('CatalogId: ', response.data.catalogId);
         return response.data.catalogId;
     } catch (error) {
         console.error('Error:', error);
@@ -148,7 +150,7 @@ async function createFlowyzerDestination(workspaceId, definitionId){
         }}
     );
  
-      console.log('Response:', response.data.destinationId);
+      console.log('Destination ID :', response.data.destinationId);
       destinationId = response.data.destinationId;
       return response.data.destinationId;
   } catch (error) {
@@ -179,7 +181,7 @@ async function createFlowyzerDestination(workspaceId, definitionId){
             'Content-Type': 'application/json'
         }});
   
-      console.log('Response:', response.data.connectionId);
+      console.log('AzureRepo Connection ID :', response.data.connectionId);
       return response.data.connectionId;
     } catch (error) {
       console.error('Error:', error);
@@ -206,7 +208,7 @@ async function createFlowyzerDestination(workspaceId, definitionId){
             'Content-Type': 'application/json'
         }});
   
-      console.log('Response:', response.data.connectionId);
+      console.log('Azure Workitems Connection ID :', response.data.connectionId);
       return response.data.connectionId;
     } catch (error) {
       console.error('Error:', error);
