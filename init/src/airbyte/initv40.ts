@@ -352,7 +352,7 @@ export class AirbyteInitV40 {
         documentationUrl: 'https://docs.faros.ai',
       },
     });
-    logger.info('sourceDefinitionId for ' + name + ': ' + sourceDefinitionId);
+    // logger.info('sourceDefinitionId for ' + name + ': ' + sourceDefinitionId);
  
     await this.createAndConnectSource(
       name,
@@ -418,7 +418,7 @@ export class AirbyteInitV40 {
             sourceDefinition
           });
 
-          console.log('WorkItems Connector Definition ID', workItemsDefId)
+          console.log('WorkItems Connector Definition ID: ', workItemsDefId)
       
       } else {
           console.log('Both sources exist.');
@@ -440,7 +440,7 @@ export class AirbyteInitV40 {
           });
         }
         
-        console.log('Azure Repos Definition ID', azureReposDefId)
+        console.log('Azure Repos Definition ID: ', azureReposDefId)
         return response.data;
     } catch (error) {
         console.error('Error:', error);
@@ -469,7 +469,7 @@ export class AirbyteInitV40 {
                   documentationUrl: "",
               }
             })
-            console.log('Destination Definition ID', destinationDefId)
+            console.log('Destination Definition ID: ', destinationDefId)
         } else {
             console.log('Destination exists.');
         }
@@ -512,7 +512,6 @@ export class AirbyteInitV40 {
 
  
   async init(
-    farosConnectorsVersion: string,
     hasuraUrl: string,
     hasuraAdminSecret: string,
     segmentUserId: string
@@ -520,29 +519,19 @@ export class AirbyteInitV40 {
     logger.info('init');
  
     const workspaceId = await this.getWorkspace()
-    console.log('This is workspace id ', workspaceId)
+    console.log('Workspace ID: ', workspaceId)
     await this.checkConnectorsExist(workspaceId);
     await this.checkDestinationExist(workspaceId);
 
     // const workspaceId = await this.getFirstWorkspace();
-    logger.info('workspaceId: ' + workspaceId);
+    // logger.info('workspaceId: ' + workspaceId);
     await this.completeFarosWorkspaceSetup(workspaceId);
  
-    const farosDestinationDefintionId =
-      await this.createFarosDestinationDefinition(
-        workspaceId,
-        farosConnectorsVersion
-      );
-    logger.info('farosDestinationDefintionId: ' + farosDestinationDefintionId);
+
+    // logger.info('farosDestinationDefintionId: ' + farosDestinationDefintionId);
  
-    const farosDestinationId = await this.createFarosDestination(
-      workspaceId,
-      farosDestinationDefintionId,
-      hasuraUrl,
-      hasuraAdminSecret,
-      segmentUserId
-    );
-    logger.info('farosDestinationId: ' + farosDestinationId);
+
+    // logger.info('farosDestinationId: ' + farosDestinationId);
  
     // do NOT converstion to camel case
     const yamlSourceData = loadYamlFile(SOURCES);
@@ -556,47 +545,47 @@ export class AirbyteInitV40 {
       ['Jira', '68e63de2-bb83-4c7e-93fa-a8a9051e3993'],
     ];
     for (const communitySource of communitySources) {
-      logger.info(
-        'sourceDefinitionId for ' +
-          communitySource[0] +
-          ': ' +
-          communitySource[1] +
-          ' (community)'
-      );
-      await this.createAndConnectSource(
-        communitySource[0],
-        workspaceId,
-        farosDestinationId,
-        yamlSourceData,
-        yamlCatalogData,
-        communitySource[1]
-      );
+      // logger.info(
+      //   'sourceDefinitionId for ' +
+      //     communitySource[0] +
+      //     ': ' +
+      //     communitySource[1] +
+      //     ' (community)'
+      // );
+      // await this.createAndConnectSource(
+      //   communitySource[0],
+      //   workspaceId,
+      //   farosDestinationId,
+      //   yamlSourceData,
+      //   yamlCatalogData,
+      //   communitySource[1]
+      // );
     }
  
-    const farosSources = [
-      'Bitbucket',
-      'Phabricator',
-      'Buildkite',
-      'CircleCI',
-      'Harness',
-      'Jenkins',
-      'Datadog',
-      'OpsGenie',
-      'PagerDuty',
-      'SquadCast',
-      'Statuspage',
-      'VictorOps',
-    ];
-    for (const farosSource of farosSources) {
-      await this.handleFarosSource(
-        farosSource,
-        workspaceId,
-        farosDestinationId,
-        farosConnectorsVersion,
-        yamlSourceData,
-        yamlCatalogData
-      );
-    }
+    // const farosSources = [
+    //   'Bitbucket',
+    //   'Phabricator',
+    //   'Buildkite',
+    //   'CircleCI',
+    //   'Harness',
+    //   'Jenkins',
+    //   'Datadog',
+    //   'OpsGenie',
+    //   'PagerDuty',
+    //   'SquadCast',
+    //   'Statuspage',
+    //   'VictorOps',
+    // ];
+    // for (const farosSource of farosSources) {
+    //   await this.handleFarosSource(
+    //     farosSource,
+    //     workspaceId,
+    //     farosDestinationId,
+    //     farosConnectorsVersion,
+    //     yamlSourceData,
+    //     yamlCatalogData
+    //   );
+    // }
   }
 }
  

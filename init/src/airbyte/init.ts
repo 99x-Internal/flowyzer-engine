@@ -133,7 +133,6 @@ export class AirbyteInit {
       // destination spec expects uuid for segment_user_id
       // empty string fails validation
       await airbyteInitV40.init(
-        farosConnectorsVersion,
         airbyteDestinationHasuraUrl,
         hasuraAdminSecret,
         segmentUser?.userId ?? '00000000-0000-0000-0000-000000000000'
