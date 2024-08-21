@@ -123,21 +123,11 @@ export class AirbyteInit {
     }
     logger.info(`Setting up workspace ${workspaceId}`);
 
-    // TODO: connectors upgrades
-    const farosConnectorsVersion = await AirbyteInit.getLatestImageTag(
-      FAROS_DEST_REPO
-    );
-    logger.info('faros connectors version: ' + farosConnectorsVersion);
     const airbyteInitV40: AirbyteInitV40 = new AirbyteInitV40(this.api);
     try {
       // destination spec expects uuid for segment_user_id
       // empty string fails validation
-      await airbyteInitV40.init(
-        farosConnectorsVersion,
-        airbyteDestinationHasuraUrl,
-        hasuraAdminSecret,
-        segmentUser?.userId ?? '00000000-0000-0000-0000-000000000000'
-      );
+      await airbyteInitV40.init();
     } catch (error) {
       throw new VError(`Failed to set up workspace: ${error}`);
     }
