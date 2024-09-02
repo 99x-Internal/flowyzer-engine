@@ -34,8 +34,10 @@ alter table "ims_IncidentTasks" add foreign key (task) references "tms_Task"(id)
 alter table "ims_TeamIncidentAssociation" add foreign key (incident) references "ims_Incident"(id);
 alter table "ims_TeamIncidentAssociation" add foreign key (team) references "ims_Team"(id);
 alter table "tms_Epic" add foreign key (project) references "tms_Project"(id);
+alter table "tms_Project" add foreign key (organization) references "vcs_Organization"(id);
 alter table "tms_ProjectReleaseRelationship" add foreign key (project) references "tms_Project"(id);
 alter table "tms_ProjectReleaseRelationship" add foreign key (release) references "tms_Release"(id);
+alter table "tms_Sprint" add foreign key (organization) references "vcs_Organization"(id);
 alter table "tms_Task" add foreign key (creator) references "tms_User"(id);
 alter table "tms_Task" add foreign key (epic) references "tms_Epic"(id);
 alter table "tms_Task" add foreign key (parent) references "tms_Task"(id);
@@ -73,6 +75,7 @@ alter table "vcs_PullRequestComment" add foreign key ("pullRequest") references 
 alter table "vcs_PullRequestComment" add foreign key (author) references "vcs_User"(id);
 alter table "vcs_PullRequestReview" add foreign key ("pullRequest") references "vcs_PullRequest"(id);
 alter table "vcs_PullRequestReview" add foreign key (reviewer) references "vcs_User"(id);
+alter table "vcs_User" add foreign key (organization) references "vcs_Organization"(id);
 alter table "vcs_Repository" add foreign key (organization) references "vcs_Organization"(id);
 alter table "vcs_Tag" add foreign key (commit) references "vcs_Commit"(id);
 alter table "vcs_Tag" add foreign key (repository) references "vcs_Repository"(id);
