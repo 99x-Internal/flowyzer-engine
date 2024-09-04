@@ -1,0 +1,42 @@
+[
+    {
+        "sourceDefinitionID": "c7aab008-276b-4a15-b2c8-150b03c9c0b4",
+        "connecter_name": "Azure_Workitems_Connecter",
+        "connecter_type": "Azure_Workitems",
+        "organization_Name": "BUS-AS-Norway",
+        "project_name": ["BUS"],
+        "project_key": "",
+        "cut_off_days": 180,
+        "PAT": "replace-pat-at-time-of-executing-the-script-to-git-with-pat"
+    },
+    {
+        "sourceDefinitionID": "c7aab008-276b-4a15-b2c8-150b03c9c0b4",
+        "connecter_name": "Azure_Workitems_Connecter",
+        "connecter_type": "Azure_Workitems",
+        "organization_Name": "compello",
+        "project_name": ["Process-MicroServices"],
+        "project_key": "",
+        "cut_off_days": 180,
+        "PAT": "replace-pat-at-time-of-executing-the-script-to-git-with-pat"
+    },
+    {
+        "sourceDefinitionID": "c7aab008-276b-4a15-b2c8-150b03c9c0b4",
+        "connecter_name": "Azure_Workitems_Connecter",
+        "connecter_type": "Azure_Repos",
+        "organization_Name": "cultureintelligence",
+        "project_name": ["CultureEngine"],
+        "project_key": "",
+        "cut_off_days": 180,
+        "PAT": "replace-pat-at-time-of-executing-the-script-to-git-with-pat"
+    },
+    {
+        "sourceDefinitionID": "4f9e6448-2310-48a1-b0d6-f5e9b412bce8",
+        "connecter_name": "Azure_Repos_Connecter",
+        "connecter_type": "Azure_Repos",
+        "organization_Name": "cultureintelligence",
+        "project_name": ["CultureEngine"],
+        "project_key": "",
+        "cut_off_days": 180,
+        "PAT": "replace-pat-at-time-of-executing-the-script-to-git-with-pat"
+    }
+]

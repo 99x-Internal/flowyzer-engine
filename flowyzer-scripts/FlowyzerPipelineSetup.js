@@ -10,12 +10,12 @@ const BASE_RESOURCES_DIR = path.join(__dirname, '../init/resources/airbyte');
 const CREATE_DESTINATION_CONFIG = path.join(BASE_RESOURCES_DIR, 'workspace', 'destination_config', 'config.json');
 
 // Load the JSON file that contains the source data
-const sourcesDataPath = path.join(BASE_RESOURCES_DIR, 'workspace', 'customers' ,'customers.json');
+const sourcesDataPath = path.join(BASE_RESOURCES_DIR, 'workspace', 'customers', 'customers.json');
 const sourcesData = JSON.parse(fs.readFileSync(sourcesDataPath, 'utf-8'));
 
-let destinationDefId = "ca29d958-1a23-4f5a-89d6-2e1f77f8e283";
+let destinationDefId = "3a0d819b-a2fa-4a41-a3bd-d23f3bf0bcea";
 let destinationId;
-let workspaceId = "46f6120d-3e60-4da9-bf10-0fc8dc52c29e";
+let workspaceId = "cfefa45f-5049-4925-ab7b-1c24751d8304";
 
 async function createSource(sourceData) {
     const projectNames = sourceData.project_name.join(', ');
@@ -97,8 +97,19 @@ async function createFlowyzerDestination(workspaceId) {
 }
 
 async function createConnection(sourceId, destinationId, sourceCatalogId, sourceData) {
+    let connectionFilePath;
+
+    // Select the appropriate configuration file based on the connecter_type
+    if (sourceData.connecter_type === 'Azure_Workitems') {
+        connectionFilePath = path.join(BASE_RESOURCES_DIR, 'workspace', 'create_connection', 'workitems_connection_config.json');
+    } else if (sourceData.connecter_type === 'Azure_Repos') {
+        connectionFilePath = path.join(BASE_RESOURCES_DIR, 'workspace', 'create_connection', 'repos_source_connection_config.json');
+    } else {
+        console.error(`Unknown connecter_type: ${sourceData.connecter_type}`);
+        return;
+    }
+
     try {
-        const connectionFilePath = path.join(BASE_RESOURCES_DIR, 'workspace', 'create_connection', `connection_config.json`);
         const fileContent = fs.readFileSync(connectionFilePath, 'utf-8');
         const data = JSON.parse(fileContent);
 
