@@ -1,6 +1,6 @@
 {
-    "sourceId": "347222f5-d53d-4a0e-a42b-38c713bcf33b",
-    "destinationId": "ad9f2a08-5048-40a7-97a6-de94087fc06e",
+    "sourceId": "",
+    "destinationId": "",
     "syncCatalog": {
         "streams": [
             {
@@ -964,8 +964,8 @@
     "namespaceDefinition": "source",
     "namespaceFormat": "${SOURCE_NAMESPACE}",
     "scheduleType": "manual",
-    "name": "99xFlowyzerTestAzureRepoSource <> Faros Destination",
+    "name": "",
     "operations": [],
     "status": "active",
-    "sourceCatalogId": "3e2d13bd-edf9-4e18-a5eb-272cd2ae7654"
+    "sourceCatalogId": ""
 }

@@ -1,13 +1,13 @@
 {
-    "sourceId": "afa1b91e-a687-42c2-a45b-16937bc1bbcb",
-    "destinationId": "ad9f2a08-5048-40a7-97a6-de94087fc06e",
+    "sourceId": "",
+    "destinationId": "",
     "syncCatalog": {
         "streams": [
             {
                 "config": {
                     "syncMode": "full_refresh",
                     "cursorField": [],
-                    "destinationSyncMode": "overwrite",
+                    "destinationSyncMode": "append_dedup",
                     "primaryKey": [
                         [
                             "id"
@@ -48,7 +48,7 @@
                 "config": {
                     "syncMode": "full_refresh",
                     "cursorField": [],
-                    "destinationSyncMode": "overwrite",
+                    "destinationSyncMode": "append_dedup",
                     "primaryKey": [
                         [
                             "id"
@@ -106,7 +106,7 @@
                 "config": {
                     "syncMode": "full_refresh",
                     "cursorField": [],
-                    "destinationSyncMode": "overwrite",
+                    "destinationSyncMode": "append_dedup",
                     "primaryKey": [
                         [
                             "principalName"
@@ -213,7 +213,7 @@
                 "config": {
                     "syncMode": "full_refresh",
                     "cursorField": [],
-                    "destinationSyncMode": "overwrite",
+                    "destinationSyncMode": "append_dedup",
                     "primaryKey": [
                         [
                             "id"
@@ -593,8 +593,8 @@
     "namespaceDefinition": "source",
     "namespaceFormat": "${SOURCE_NAMESPACE}",
     "scheduleType": "manual",
-    "name": "99xFlowyzerTestTwoAzureWorkitemsSource <> FlowyzerAzureRepoDestination",
+    "name": "",
     "operations": [],
     "status": "active",
-    "sourceCatalogId": "4e6da83b-35ee-4382-b153-9870ff4f1d01"
+    "sourceCatalogId": ""
 }
