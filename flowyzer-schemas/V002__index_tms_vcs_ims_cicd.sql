@@ -281,3 +281,4 @@ create index "vcs_User_name_idx" on "vcs_User"(name);
 create index "vcs_User_email_idx" on "vcs_User"(email);
 create index "vcs_User_type_idx" on "vcs_User" using gin(type);
 create index "vcs_User_source_idx" on "vcs_User"(source);
+create index "vcs_User_organization_idx" on "vcs_User"(organization);
